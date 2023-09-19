@@ -17,7 +17,7 @@ namespace MoneyBoxWebsite.Models
         public required string Description { get; set; }
 
         [Column("price")]
-        public decimal Price { get; set; } = 0;
+        public float Price { get; set; } = 0;
 
         [Column("image_file_path")]
         public required string ImageFilePath { get; set; }

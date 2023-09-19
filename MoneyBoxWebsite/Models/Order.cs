@@ -17,7 +17,7 @@ namespace MoneyBoxWebsite.Models
         [Column("reservation_date")]
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
-        public DateOnly ReservationDate { get; set; }
+        public DateTime ReservationDate { get; set; }
 
         [Column("order_total_sum")]
         public float OrderTotalSum { get; set; }
