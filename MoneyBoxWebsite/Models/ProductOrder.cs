@@ -1,18 +1,25 @@
-﻿namespace MoneyBoxWebsite.Models
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace MoneyBoxWebsite.Models
 {
     public class ProductOrder
     {
+        [Column("id")]
         public Guid Id { get; set; }
 
+        [Column("quantity")]
         public int Quantity { get; set; }
 
+        [Column("sell_price")]
         public float SellPrice { get; set; }
 
 
         /*      RELATIONS       */
 
+        [Column("linked_product")]
         public required Product LinkedProduct { get; set; }
 
+        [Column("linked_order")]
         public required Order LinkedOrder { get; set; }
     }
 }

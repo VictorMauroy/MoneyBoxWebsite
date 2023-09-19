@@ -19,6 +19,7 @@ namespace MoneyBoxWebsite.Models
         [Column("password")]
         public required string Password { get; set; }
 
+        [Column("current_theme")]
         public required string CurrentTheme { get; set; } //Will use an enum.
 
         [Column("enabled")]
@@ -26,11 +27,14 @@ namespace MoneyBoxWebsite.Models
 
 
         /*      RELATIONS       */
-
+        
+        [Column("current_role")]
         public required Role CurrentRole { get; set; }
 
+        [Column("reviews")]
         public List<Review> Reviews { get; set; } = new List<Review>();
 
+        [Column("orders")]
         public List<Order> Orders { get; set; } = new List<Order>();
     }
 }
