@@ -11,6 +11,8 @@
 
         /*      RELATIONS       */
 
-    
+        public required Product LinkedProduct { get; set; }
+
+        public required Order LinkedOrder { get; set; }
     }
 }

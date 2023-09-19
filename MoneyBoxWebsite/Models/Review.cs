@@ -4,14 +4,16 @@
     {
         public Guid Id { get; set; }
 
-        public string Message { get; set; }
+        public required string Message { get; set; }
 
-        public bool IsValidate { get; set; }
+        public bool IsValidate { get; set; } = false;
 
 
 
         /*      RELATIONS       */
 
+        public required Client Creator { get; set; }
 
+        public required Product LinkedProduct { get; set; }
     }
 }
