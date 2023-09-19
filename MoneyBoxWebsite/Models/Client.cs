@@ -19,13 +19,13 @@ namespace MoneyBoxWebsite.Models
         [Column("password")]
         public required string Password { get; set; }
 
+        public required string CurrentTheme { get; set; } //Will use an enum.
+
         [Column("enabled")]
         public bool AccountEnabled { get; set; } = true;
 
 
         /*      RELATIONS       */
-
-        public required Theme CurrentTheme { get; set; }
 
         public required Role CurrentRole { get; set; }
 

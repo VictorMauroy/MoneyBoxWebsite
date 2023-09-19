@@ -1,3 +1,5 @@
+using Microsoft.EntityFrameworkCore;
+
 namespace MoneyBoxWebsite
 {
     public class Program
@@ -8,6 +10,9 @@ namespace MoneyBoxWebsite
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
+
+            builder.Services.AddDbContext<ApplicationDbContext>(options =>
+                options.UseSqlServer(builder.Configuration.GetConnectionString("SQLConnection")));
 
             var app = builder.Build();
 
