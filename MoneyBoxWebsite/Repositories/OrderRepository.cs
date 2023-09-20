@@ -35,12 +35,6 @@ namespace MoneyBoxWebsite.Repositories
             SaveChangesAsync();
         }
 
-        public void UpdateOrderAsync(Order order)
-        {
-            _ctx.Orders.Update(order);
-            SaveChangesAsync();
-        }
-
         public async void SaveChangesAsync()
         {
             await _ctx.SaveChangesAsync();
