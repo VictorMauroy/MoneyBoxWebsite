@@ -12,25 +12,25 @@ namespace MoneyBoxWebsite.Repositories
             this._ctx = ctx;
         }
 
-        public async Task<IEnumerable<Product>> GetAllProductsAsync()
+        public async Task<IEnumerable<Product>> GetAllAsync()
         {
             return await _ctx.Products.ToListAsync();
         }
 
-        public async Task<Product> GetProductByIdAsync(Guid id)
+        public async Task<Product> GetByIdAsync(Guid id)
         {
             return await _ctx.Products.FirstAsync(p => p.ProductId == id);
         }
         
-        public async void CreateProductAsync(Product product)
+        public async void CreateAsync(Product product)
         {
             await _ctx.Products.AddAsync(product);
             SaveChangesAsync();
         }
 
-        public async void DisableProductAsync(Guid id)
+        public async void DisableAsync(Guid id)
         {
-            Product productToDisable = await GetProductByIdAsync(id);
+            Product productToDisable = await GetByIdAsync(id);
             productToDisable.Visibility = false;
             SaveChangesAsync();
         }

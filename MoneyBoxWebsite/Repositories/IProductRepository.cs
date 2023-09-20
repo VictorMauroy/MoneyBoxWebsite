@@ -4,10 +4,10 @@ namespace MoneyBoxWebsite.Repositories
 {
     public interface IProductRepository
     {
-        Task<IEnumerable<Product>> GetAllProductsAsync();
-        Task<Product> GetProductByIdAsync(Guid id);
-        void CreateProductAsync(Product product);
-        void DisableProductAsync(Guid id);
+        Task<IEnumerable<Product>> GetAllAsync();
+        Task<Product> GetByIdAsync(Guid id);
+        void CreateAsync(Product product);
+        void DisableAsync(Guid id);
         void SaveChangesAsync();
     }
 }
