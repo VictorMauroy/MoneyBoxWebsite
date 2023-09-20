@@ -1,12 +1,11 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace MoneyBoxWebsite.Models
 {
-    public class Client
+    public class Client : IdentityUser
     {
-        [Column("id")]
-        public Guid Id { get; set; }
-
         [Column("name")]
         public required string Name { get; set; }
 
@@ -16,9 +15,6 @@ namespace MoneyBoxWebsite.Models
         [Column("address")]
         public required string Address { get; set; }
 
-        [Column("password")]
-        public required string Password { get; set; }
-
         [Column("current_theme")]
         public required string CurrentTheme { get; set; } //Will use an enum.
 
@@ -27,9 +23,6 @@ namespace MoneyBoxWebsite.Models
 
 
         /*      RELATIONS       */
-        
-        [Column("current_role")]
-        public required Role CurrentRole { get; set; }
 
         [Column("reviews")]
         public List<Review> Reviews { get; set; } = new List<Review>();

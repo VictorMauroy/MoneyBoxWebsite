@@ -1,11 +1,12 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using MoneyBoxWebsite.Models;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace MoneyBoxWebsite
 {
-    public class ApplicationDbContext : DbContext
+    public class ApplicationDbContext : IdentityDbContext<Client>
     {
-        public ApplicationDbContext(DbContextOptions options) : base(options)
+        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         {
 
         }
@@ -14,8 +15,12 @@ namespace MoneyBoxWebsite
         public DbSet<Product> Products { get; set; }
         public DbSet<Order> Orders { get; set; }
         public DbSet<Review> Reviews { get; set; }
-        public DbSet<Role> Roles { get; set; }
         public DbSet<OrderStatus> OrderStatus { get; set; }
         public DbSet<ProductGroup> ProductGroups { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+        }
     }
 }

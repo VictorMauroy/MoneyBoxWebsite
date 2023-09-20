@@ -1,5 +1,7 @@
+using Microsoft.AspNetCore.Identity;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
+using MoneyBoxWebsite.Models;
 
 namespace MoneyBoxWebsite
 {
@@ -12,21 +14,48 @@ namespace MoneyBoxWebsite
             // Add services to the container.
             builder.Services.AddControllersWithViews();
 
+
+            // Database connection
             var conStrBuilder = new SqlConnectionStringBuilder(
                 builder.Configuration.GetConnectionString("SQLConnection")
             );
-
             conStrBuilder.UserID = builder.Configuration["DB_USERID"];
             conStrBuilder.Password = builder.Configuration["DB_PASSWORD"];
 
             builder.Services.AddDbContext<ApplicationDbContext>(
-                options => options.UseSqlServer(
-                    conStrBuilder.ConnectionString
-                )
-            );
+                options => options.UseSqlServer(conStrBuilder.ConnectionString));
 
-            //builder.Services.AddDbContext<ApplicationDbContext>(options =>
-            //    options.UseSqlServer(builder.Configuration.GetConnectionString("SQLConnection")));
+
+            // Identity configuration
+            builder.Services.AddIdentity<Client, IdentityRole>()
+                .AddEntityFrameworkStores<ApplicationDbContext>()
+                .AddDefaultTokenProviders();
+
+            builder.Services.Configure<IdentityOptions>(options =>
+            {
+                // Password settings.
+                options.Password.RequireDigit = true; // default
+                options.Password.RequireLowercase = true; // default
+                options.Password.RequireNonAlphanumeric = true; // default
+                options.Password.RequireUppercase = true; // default
+                options.Password.RequiredLength = 6; // default
+                options.Password.RequiredUniqueChars = 1; // default
+
+                // SignIn settings.
+                options.SignIn.RequireConfirmedEmail = false; // default
+                options.SignIn.RequireConfirmedPhoneNumber = false; // default
+
+                // Lockout settings.
+                options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5); // default
+                options.Lockout.MaxFailedAccessAttempts = 5; // default
+                options.Lockout.AllowedForNewUsers = true; // default
+
+                // User settings.
+                options.User.AllowedUserNameCharacters =
+                    "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._@+"; // default
+                options.User.RequireUniqueEmail = true; //UPDATED
+            });
+
 
             var app = builder.Build();
 
