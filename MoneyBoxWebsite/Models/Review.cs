@@ -1,11 +1,13 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace MoneyBoxWebsite.Models
 {
     public class Review
     {
+        [Key]
         [Column("id")]
-        public Guid Id { get; set; }
+        public Guid ReviewId { get; set; }
 
         [Column("message")]
         public required string Message { get; set; }

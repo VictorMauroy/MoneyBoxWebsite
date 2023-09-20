@@ -5,8 +5,9 @@ namespace MoneyBoxWebsite.Models
 {
     public class Order
     {
+        [Key]
         [Column("id")]
-        public Guid Id { get; set; }
+        public Guid OrderId { get; set; }
 
         [Column("reference")]
         public required string Reference { get; set; }
