@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using MoneyBoxWebsite.Models;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
 
 namespace MoneyBoxWebsite
 {
@@ -20,7 +21,32 @@ namespace MoneyBoxWebsite
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            base.OnModelCreating(modelBuilder);
+            base.OnModelCreating(modelBuilder); // Necessary for Identity to initialize its tables.
+
+
+            modelBuilder.Entity<IdentityRole>().HasData(
+                new IdentityRole()
+                {
+                    Name = "Client",
+                },
+                new IdentityRole()
+                {
+                    Name = "Assistant"
+                },
+                new IdentityRole()
+                {
+                    Name = "Manager"
+                },
+                new IdentityRole()
+                {
+                    Name = "Moderator"
+                },
+                new IdentityRole()
+                {
+                    Name = "Administrator"
+                }
+            );
+            
         }
     }
 }
