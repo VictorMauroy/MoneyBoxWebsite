@@ -1,3 +1,4 @@
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 
 namespace MoneyBoxWebsite
@@ -11,8 +12,21 @@ namespace MoneyBoxWebsite
             // Add services to the container.
             builder.Services.AddControllersWithViews();
 
-            builder.Services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlServer(builder.Configuration.GetConnectionString("SQLConnection")));
+            var conStrBuilder = new SqlConnectionStringBuilder(
+                builder.Configuration.GetConnectionString("SQLConnection")
+            );
+
+            conStrBuilder.UserID = builder.Configuration["DB_USERID"];
+            conStrBuilder.Password = builder.Configuration["DB_PASSWORD"];
+
+            builder.Services.AddDbContext<ApplicationDbContext>(
+                options => options.UseSqlServer(
+                    conStrBuilder.ConnectionString
+                )
+            );
+
+            //builder.Services.AddDbContext<ApplicationDbContext>(options =>
+            //    options.UseSqlServer(builder.Configuration.GetConnectionString("SQLConnection")));
 
             var app = builder.Build();
 
