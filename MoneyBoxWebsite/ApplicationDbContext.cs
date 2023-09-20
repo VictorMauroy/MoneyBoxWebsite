@@ -23,8 +23,7 @@ namespace MoneyBoxWebsite
         {
             base.OnModelCreating(modelBuilder); // Necessary for Identity to initialize its tables.
 
-
-            modelBuilder.Entity<IdentityRole>().HasData(
+            /*modelBuilder.Entity<IdentityRole>().HasData(
                 new IdentityRole()
                 {
                     Name = "Client",
@@ -45,8 +44,10 @@ namespace MoneyBoxWebsite
                 {
                     Name = "Administrator"
                 }
-            );
+            );*/
             
         }
+
+        
     }
 }

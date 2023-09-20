@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using MoneyBoxWebsite.Models;
+using MoneyBoxWebsite.Repositories;
 
 namespace MoneyBoxWebsite
 {
@@ -56,6 +57,8 @@ namespace MoneyBoxWebsite
                 options.User.RequireUniqueEmail = true; //UPDATED
             });
 
+
+            builder.Services.AddScoped<IOrderRepository, OrderRepository>();
 
             var app = builder.Build();
 
