@@ -4,3 +4,58 @@
     ViewData["Title"] = "Register";
 }
 
+<h1>@ViewData["Title"]</h1>
+
+<div class="row">
+    
+    <form id="registerForm" action="/Account/Register" method="post">
+        <h2>Create a new account.</h2>
+        <hr />
+
+        <!-- Show errors about the model / the data given by the user -->
+        <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
+        
+        <div class="form-floating mb-3">
+            <input asp-for="Username" class="form-control" aria-required="true" autocomplete="on" placeholder="TheNamedOne" />
+            <label asp-for="Username">Username</label>
+            <span asp-validation-for="Username" class="text-danger"></span>
+        </div>
+        
+        <div class="form-floating mb-3">
+            <input asp-for="FirstName" class="form-control" aria-required="true" autocomplete="on" placeholder="TheFirstOne" />
+            <label asp-for="FirstName">FirstName</label>
+            <span asp-validation-for="FirstName" class="text-danger"></span>
+        </div>
+
+        <div class="form-floating mb-3">
+            <input asp-for="LastName" class="form-control" aria-required="true" autocomplete="on" placeholder="TheLastOne" />
+            <label asp-for="LastName">LastName</label>
+            <span asp-validation-for="LastName" class="text-danger"></span>
+        </div>
+
+        <!-- aria-required="true" add many accessibility and validation functions -->
+        <div class="form-floating mb-3">
+            <input asp-for="Email" class="form-control" aria-required="true" autocomplete="on" placeholder="name@example.com" />
+            <label asp-for="Email">Email</label>
+            <span asp-validation-for="Email" class="text-danger"></span>
+        </div>
+
+        <!-- TEMPORARY, I'll make a greater one later. -->
+        <div class="form-floating mb-3">
+            <input asp-for="Address" class="form-control" aria-required="true" autocomplete="on" placeholder="1 rue des Champs 80808 Perduville, France" />
+            <label asp-for="Address">Address</label>
+            <span asp-validation-for="Address" class="text-danger"></span>
+        </div>
+
+        <div class="form-floating mb-3">
+            <input asp-for="PhoneNumber" class="form-control" aria-required="true" autocomplete="on" placeholder="0123456789" />
+            <label asp-for="PhoneNumber">PhoneNumber</label>
+            <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+        </div>
+
+        <div class="container py-2">
+            <input class="btn btn-dark " type="submit" value="Register" />
+        </div>
+    </form>
+    
+</div>
