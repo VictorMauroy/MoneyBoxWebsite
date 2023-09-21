@@ -48,9 +48,9 @@
             <th>
                 @Html.DisplayNameFor(model => model.MoneyCapacity)
             </th>
-            <th>
+            @*<th>
                 @Html.DisplayNameFor(model => model.Visibility)
-            </th>
+            </th>*@
             <th></th>
         </tr>
     </thead>
@@ -70,7 +70,7 @@
                 @Html.DisplayFor(modelItem => item.Price)
             </td>
             <td>
-                <img src="@item.ImageFilePath" alt="Image of @item.Name" />
+                <img class="contained" src="@item.ImageFilePath" width="200" height="200" alt="Image of @item.Name" />
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Height)
@@ -93,9 +93,9 @@
             <td>
                 @Html.DisplayFor(modelItem => item.MoneyCapacity)
             </td>
-            <td>
+            @*<td>
                 @Html.DisplayFor(modelItem => item.Visibility)
-            </td>
+            </td>*@
             <td>
                 <a asp-action="Edit" asp-route-id="@item.ProductId">Edit</a> |
                 <a asp-action="Details" asp-route-id="@item.ProductId">Details</a> |
