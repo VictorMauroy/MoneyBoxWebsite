@@ -60,6 +60,7 @@ namespace MoneyBoxWebsite
 
             builder.Services.AddScoped<IOrderRepository, OrderRepository>();
             builder.Services.AddScoped<IProductRepository, ProductRepository>();
+            builder.Services.AddScoped<IReviewRepository, ReviewRepository>();
 
             var app = builder.Build();
 
