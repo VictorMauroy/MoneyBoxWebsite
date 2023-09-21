@@ -22,20 +22,20 @@ namespace MoneyBoxWebsite.Repositories
             return await _ctx.Products.FirstAsync(p => p.ProductId == id);
         }
         
-        public async void CreateAsync(Product product)
+        public async Task CreateAsync(Product product)
         {
             await _ctx.Products.AddAsync(product);
-            SaveChangesAsync();
+            await SaveChangesAsync();
         }
 
-        public async void DisableAsync(Guid id)
+        public async Task DisableAsync(Guid id)
         {
             Product productToDisable = await GetByIdAsync(id);
             productToDisable.Visibility = false;
-            SaveChangesAsync();
+            await SaveChangesAsync();
         }
 
-        public async void SaveChangesAsync()
+        public async Task SaveChangesAsync()
         {
             await _ctx.SaveChangesAsync();
         }

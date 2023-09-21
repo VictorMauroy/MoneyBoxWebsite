@@ -22,20 +22,20 @@ namespace MoneyBoxWebsite.Repositories
             return await _ctx.Orders.ToListAsync();
         }
 
-        public async void CreateAsync(Order order)
+        public async Task CreateAsync(Order order)
         {
             await _ctx.Orders.AddAsync(order);
-            SaveChangesAsync();
+            await SaveChangesAsync();
         }
 
-        public async void DeleteAsync(Guid id)
+        public async Task DeleteAsync(Guid id)
         {
             Order orderToRemove = await GetByIdAsync(id);
             _ctx.Orders.Remove(orderToRemove);
-            SaveChangesAsync();
+            await SaveChangesAsync();
         }
 
-        public async void SaveChangesAsync()
+        public async Task SaveChangesAsync()
         {
             await _ctx.SaveChangesAsync();
         }

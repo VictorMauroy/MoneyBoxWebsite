@@ -6,8 +6,8 @@ namespace MoneyBoxWebsite.Repositories
     {
         Task<IEnumerable<Review>> GetAllAsync();
         Task<Review> GetByIdAsync(Guid id);
-        void CreateAsync(Review review);
-        void DeleteAsync(Guid id);
-        void SaveChangesAsync();
+        Task CreateAsync(Review review);
+        Task DeleteAsync(Guid id);
+        Task SaveChangesAsync();
     }
 }

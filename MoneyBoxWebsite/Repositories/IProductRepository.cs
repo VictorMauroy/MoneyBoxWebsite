@@ -6,8 +6,8 @@ namespace MoneyBoxWebsite.Repositories
     {
         Task<IEnumerable<Product>> GetAllAsync();
         Task<Product> GetByIdAsync(Guid id);
-        void CreateAsync(Product product);
-        void DisableAsync(Guid id);
-        void SaveChangesAsync();
+        Task CreateAsync(Product product);
+        Task DisableAsync(Guid id);
+        Task SaveChangesAsync();
     }
 }

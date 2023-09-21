@@ -21,20 +21,20 @@ namespace MoneyBoxWebsite.Repositories
             return await _ctx.Reviews.ToListAsync();
         }
 
-        public async void CreateAsync(Review review)
+        public async Task CreateAsync(Review review)
         {
             await _ctx.Reviews.AddAsync(review);
-            SaveChangesAsync();
+            await SaveChangesAsync();
         }
 
-        public async void DeleteAsync(Guid id)
+        public async Task DeleteAsync(Guid id)
         {
             Review reviewToRemove = await GetByIdAsync(id);
             _ctx.Reviews.Remove(reviewToRemove);
-            SaveChangesAsync();
+            await SaveChangesAsync();
         }
 
-        public async void SaveChangesAsync()
+        public async Task SaveChangesAsync()
         {
             await _ctx.SaveChangesAsync();
         }
