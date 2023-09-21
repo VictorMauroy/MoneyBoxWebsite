@@ -23,7 +23,7 @@ namespace MoneyBoxWebsite
         {
             base.OnModelCreating(modelBuilder); // Necessary for Identity to initialize its tables.
 
-            /*modelBuilder.Entity<IdentityRole>().HasData(
+            modelBuilder.Entity<IdentityRole>().HasData(
                 new IdentityRole()
                 {
                     Name = "Client",
@@ -44,8 +44,55 @@ namespace MoneyBoxWebsite
                 {
                     Name = "Administrator"
                 }
-            );*/
-            
+            );
+
+            modelBuilder.Entity<Product>().HasData(
+                new Product()
+                {
+                    Name = "Classic Pink",
+                    Description = "You all have it in mind and now it's on sale!",
+                    Price = 50,
+                    Height = 15,
+                    Width = 20,
+                    Length = 15,
+                    Weigth = 1,
+                    MoneyCapacity = 56,
+                    ImageFilePath = "/images/0001.jpg",
+                    Reference = "#" + "000001",
+                    Manufacturer = "Database",
+                    Color = "Pink"
+                },
+                new Product()
+                {
+                    Name = "Pink pink",
+                    Description = "There will never be enough of pink in your life.",
+                    Price = 65,
+                    Height = 10,
+                    Width = 15,
+                    Length = 15,
+                    Weigth = 0.7f,
+                    MoneyCapacity = 42,
+                    ImageFilePath = "/images/0002.jpg",
+                    Reference = "#" + "000002",
+                    Manufacturer = "Database",
+                    Color = "Pink"
+                },
+                new Product()
+                {
+                    Name = "Red pink",
+                    Description = "Should be red but we didn't have any red colorant in our stock.",
+                    Price = 25,
+                    Height = 15,
+                    Width = 20,
+                    Length = 15,
+                    Weigth = 1.5f,
+                    MoneyCapacity = 51,
+                    ImageFilePath = "/images/0003.jpg",
+                    Reference = "#" + "000003",
+                    Manufacturer = "Database",
+                    Color = "Red"
+                }
+            );
         }
 
         

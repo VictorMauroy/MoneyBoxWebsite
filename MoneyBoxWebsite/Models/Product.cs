@@ -7,7 +7,7 @@ namespace MoneyBoxWebsite.Models
     {
         [Key]
         [Column("id")]
-        public Guid ProductId { get; set; }
+        public Guid ProductId { get; set; } = Guid.NewGuid();
 
         [Column("name")]
         public required string Name { get; set; }
