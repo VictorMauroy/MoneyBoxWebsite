@@ -3,6 +3,9 @@ using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using MoneyBoxWebsite.Models;
 using MoneyBoxWebsite.Repositories;
+using MoneyBoxWebsite;
+using Microsoft.AspNetCore.Identity.UI.Services;
+using Microsoft.Extensions.Options;
 
 namespace MoneyBoxWebsite
 {
@@ -28,9 +31,13 @@ namespace MoneyBoxWebsite
 
 
             // Identity configuration
+
+            //builder.Services.AddDefaultIdentity<Client>(options => options.SignIn.RequireConfirmedAccount = true).AddEntityFrameworkStores<ApplicationDbContext>();
             builder.Services.AddIdentity<Client, IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
+
+            builder.Services.AddRazorPages();
 
             builder.Services.Configure<IdentityOptions>(options =>
             {
@@ -54,13 +61,25 @@ namespace MoneyBoxWebsite
                 // User settings.
                 options.User.AllowedUserNameCharacters =
                     "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._@+"; // default
-                options.User.RequireUniqueEmail = true; //UPDATED
+                options.User.RequireUniqueEmail = false; // default
+            });
+
+            builder.Services.ConfigureApplicationCookie(options =>
+            {
+                // Cookie settings
+                options.Cookie.HttpOnly = true;
+                options.ExpireTimeSpan = TimeSpan.FromMinutes(5);
+
+                options.LoginPath = "/Identity/Account/Login";
+                options.AccessDeniedPath = "/Identity/Account/AccessDenied";
+                options.SlidingExpiration = true;
             });
 
 
             builder.Services.AddScoped<IOrderRepository, OrderRepository>();
             builder.Services.AddScoped<IProductRepository, ProductRepository>();
             builder.Services.AddScoped<IReviewRepository, ReviewRepository>();
+            //builder.Services.AddTransient<IEmailSender, EmailSender>();
 
             var app = builder.Build();
 
@@ -77,11 +96,14 @@ namespace MoneyBoxWebsite
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.MapControllerRoute(
                 name: "default",
                 pattern: "{controller=Home}/{action=Index}/{id?}");
+
+            app.MapRazorPages();
 
             app.Run();
         }
