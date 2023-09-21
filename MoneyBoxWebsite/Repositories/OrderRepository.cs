@@ -30,7 +30,7 @@ namespace MoneyBoxWebsite.Repositories
 
         public async void DeleteAsync(Guid id)
         {
-            Order orderToRemove = await _ctx.Orders.FirstAsync(o => o.OrderId == id);
+            Order orderToRemove = await GetByIdAsync(id);
             _ctx.Orders.Remove(orderToRemove);
             SaveChangesAsync();
         }
