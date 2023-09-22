@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using MoneyBoxWebsite.Data;
 using MoneyBoxWebsite.Models;
 
 namespace MoneyBoxWebsite.Repositories

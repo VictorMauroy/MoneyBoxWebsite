@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using MoneyBoxWebsite.Data;
 using MoneyBoxWebsite.Models;
 
 namespace MoneyBoxWebsite.Repositories
@@ -27,7 +28,6 @@ namespace MoneyBoxWebsite.Repositories
             await _ctx.Products.AddAsync(product);
             await SaveChangesAsync();
         }
-        
         public async Task UpdateAsync(Product product)
         {
             _ctx.Products.Update(product);

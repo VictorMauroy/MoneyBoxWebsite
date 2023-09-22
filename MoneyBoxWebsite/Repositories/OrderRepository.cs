@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using MoneyBoxWebsite.Data;
 using MoneyBoxWebsite.Models;
 
 namespace MoneyBoxWebsite.Repositories
@@ -30,7 +31,7 @@ namespace MoneyBoxWebsite.Repositories
 
         public async Task DeleteAsync(Guid id)
         {
-            Order orderToRemove = await GetByIdAsync(id);
+            Order orderToRemove = await _ctx.Orders.FirstAsync(o => o.OrderId == id);
             _ctx.Orders.Remove(orderToRemove);
             await SaveChangesAsync();
         }

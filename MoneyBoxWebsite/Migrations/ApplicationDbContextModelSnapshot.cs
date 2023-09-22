@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using MoneyBoxWebsite;
+using MoneyBoxWebsite.Data;
 
 #nullable disable
 
@@ -47,33 +47,6 @@ namespace MoneyBoxWebsite.Migrations
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("AspNetRoles", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            Id = "06e6abbb-e293-4e2f-bae5-f4e2d09c9d95",
-                            Name = "Client"
-                        },
-                        new
-                        {
-                            Id = "2e3b1ee8-eeef-4285-af50-37b289d7e0d1",
-                            Name = "Assistant"
-                        },
-                        new
-                        {
-                            Id = "0b40c1a7-6392-4f09-8d80-7fbbf1914877",
-                            Name = "Manager"
-                        },
-                        new
-                        {
-                            Id = "0e240aac-2f35-4eaf-8f08-2b0827dfa9f1",
-                            Name = "Moderator"
-                        },
-                        new
-                        {
-                            Id = "871e243c-4f9d-408f-a887-d323ce449cde",
-                            Name = "Administrator"
-                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -397,59 +370,6 @@ namespace MoneyBoxWebsite.Migrations
                     b.HasKey("ProductId");
 
                     b.ToTable("Products");
-
-                    b.HasData(
-                        new
-                        {
-                            ProductId = new Guid("48e3dc43-0292-4af5-ae68-1e45d8000123"),
-                            Color = "Pink",
-                            Description = "You all have it in mind and now it's on sale!",
-                            Height = 15f,
-                            ImageFilePath = "/images/0001.jpg",
-                            Length = 15f,
-                            Manufacturer = "Database",
-                            MoneyCapacity = 56,
-                            Name = "Classic Pink",
-                            Price = 50f,
-                            Reference = "#000001",
-                            Visibility = true,
-                            Weigth = 1f,
-                            Width = 20f
-                        },
-                        new
-                        {
-                            ProductId = new Guid("ce3b2d92-f3c8-47cb-a84a-4da188b981c7"),
-                            Color = "Pink",
-                            Description = "There will never be enough of pink in your life.",
-                            Height = 10f,
-                            ImageFilePath = "/images/0002.jpg",
-                            Length = 15f,
-                            Manufacturer = "Database",
-                            MoneyCapacity = 42,
-                            Name = "Pink pink",
-                            Price = 65f,
-                            Reference = "#000002",
-                            Visibility = true,
-                            Weigth = 0.7f,
-                            Width = 15f
-                        },
-                        new
-                        {
-                            ProductId = new Guid("ca1a9fb3-4d3e-4c5c-8663-ee537d61d4b4"),
-                            Color = "Red",
-                            Description = "Should be red but we didn't have any red colorant in our stock.",
-                            Height = 15f,
-                            ImageFilePath = "/images/0003.jpg",
-                            Length = 15f,
-                            Manufacturer = "Database",
-                            MoneyCapacity = 51,
-                            Name = "Red pink",
-                            Price = 25f,
-                            Reference = "#000003",
-                            Visibility = true,
-                            Weigth = 1.5f,
-                            Width = 20f
-                        });
                 });
 
             modelBuilder.Entity("MoneyBoxWebsite.Models.ProductGroup", b =>

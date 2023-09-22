@@ -3,9 +3,10 @@ using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using MoneyBoxWebsite.Models;
 using MoneyBoxWebsite.Repositories;
-using MoneyBoxWebsite;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.Extensions.Options;
+using MoneyBoxWebsite.Data;
+using System;
 
 namespace MoneyBoxWebsite
 {
@@ -79,7 +80,6 @@ namespace MoneyBoxWebsite
             builder.Services.AddScoped<IOrderRepository, OrderRepository>();
             builder.Services.AddScoped<IProductRepository, ProductRepository>();
             builder.Services.AddScoped<IReviewRepository, ReviewRepository>();
-            //builder.Services.AddTransient<IEmailSender, EmailSender>();
 
             var app = builder.Build();
 
@@ -104,6 +104,20 @@ namespace MoneyBoxWebsite
                 pattern: "{controller=Home}/{action=Index}/{id?}");
 
             app.MapRazorPages();
+
+            // ACCESS DBCONTEXT AND ROLE MANAGER USING A SCOPE
+            /*using (var scope = app.Services.CreateScope())
+            {
+                var context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+                var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+
+                var products = context.Products.ToList();
+                context.Products.RemoveRange(products);
+                var roles = context.Roles.ToList();
+                context.Roles.RemoveRange(roles);
+
+                context.SaveChanges();
+            }*/
 
             app.Run();
         }

@@ -12,8 +12,8 @@ using MoneyBoxWebsite.Data;
 namespace MoneyBoxWebsite.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230919143851_PriceUpdate")]
-    partial class PriceUpdate
+    [Migration("20230922113355_UndoPreviousSeed")]
+    partial class UndoPreviousSeed
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -25,12 +25,146 @@ namespace MoneyBoxWebsite.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<string>("NormalizedName")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("NormalizedName")
+                        .IsUnique()
+                        .HasDatabaseName("RoleNameIndex")
+                        .HasFilter("[NormalizedName] IS NOT NULL");
+
+                    b.ToTable("AspNetRoles", (string)null);
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("ClaimType")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ClaimValue")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("RoleId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("RoleId");
+
+                    b.ToTable("AspNetRoleClaims", (string)null);
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("ClaimType")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ClaimValue")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("AspNetUserClaims", (string)null);
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
+                {
+                    b.Property<string>("LoginProvider")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("ProviderKey")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("ProviderDisplayName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("LoginProvider", "ProviderKey");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("AspNetUserLogins", (string)null);
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
+                {
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("RoleId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("UserId", "RoleId");
+
+                    b.HasIndex("RoleId");
+
+                    b.ToTable("AspNetUserRoles", (string)null);
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
+                {
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("LoginProvider")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Value")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("UserId", "LoginProvider", "Name");
+
+                    b.ToTable("AspNetUserTokens", (string)null);
+                });
+
             modelBuilder.Entity("MoneyBoxWebsite.Models.Client", b =>
                 {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier")
-                        .HasColumnName("id");
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("AccessFailedCount")
+                        .HasColumnType("int");
 
                     b.Property<bool>("AccountEnabled")
                         .HasColumnType("bit")
@@ -41,45 +175,88 @@ namespace MoneyBoxWebsite.Migrations
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("address");
 
-                    b.Property<Guid>("CurrentRoleId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("CurrentTheme")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("current_theme");
 
+                    b.Property<string>("Email")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<bool>("EmailConfirmed")
+                        .HasColumnType("bit");
+
                     b.Property<string>("FirstName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("first_name");
+
+                    b.Property<bool>("LockoutEnabled")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTimeOffset?>("LockoutEnd")
+                        .HasColumnType("datetimeoffset");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("name");
 
-                    b.Property<string>("Password")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("password");
+                    b.Property<string>("NormalizedEmail")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<string>("NormalizedUserName")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<string>("PasswordHash")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PhoneNumber")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("PhoneNumberConfirmed")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("SecurityStamp")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("TwoFactorEnabled")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("UserName")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CurrentRoleId");
+                    b.HasIndex("NormalizedEmail")
+                        .HasDatabaseName("EmailIndex");
 
-                    b.ToTable("Clients");
+                    b.HasIndex("NormalizedUserName")
+                        .IsUnique()
+                        .HasDatabaseName("UserNameIndex")
+                        .HasFilter("[NormalizedUserName] IS NOT NULL");
+
+                    b.ToTable("AspNetUsers", (string)null);
                 });
 
             modelBuilder.Entity("MoneyBoxWebsite.Models.Order", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<Guid>("OrderId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier")
                         .HasColumnName("id");
 
-                    b.Property<Guid>("ClientId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<string>("ClientId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("DeliveringAddress")
                         .IsRequired()
@@ -102,7 +279,7 @@ namespace MoneyBoxWebsite.Migrations
                         .HasColumnType("datetime2")
                         .HasColumnName("reservation_date");
 
-                    b.HasKey("Id");
+                    b.HasKey("OrderId");
 
                     b.HasIndex("ClientId");
 
@@ -113,7 +290,7 @@ namespace MoneyBoxWebsite.Migrations
 
             modelBuilder.Entity("MoneyBoxWebsite.Models.OrderStatus", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<Guid>("OrderStatusId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier")
                         .HasColumnName("id");
@@ -123,14 +300,14 @@ namespace MoneyBoxWebsite.Migrations
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("name");
 
-                    b.HasKey("Id");
+                    b.HasKey("OrderStatusId");
 
                     b.ToTable("OrderStatus");
                 });
 
             modelBuilder.Entity("MoneyBoxWebsite.Models.Product", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<Guid>("ProductId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier")
                         .HasColumnName("id");
@@ -193,14 +370,14 @@ namespace MoneyBoxWebsite.Migrations
                         .HasColumnType("real")
                         .HasColumnName("width");
 
-                    b.HasKey("Id");
+                    b.HasKey("ProductId");
 
                     b.ToTable("Products");
                 });
 
             modelBuilder.Entity("MoneyBoxWebsite.Models.ProductGroup", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<Guid>("ProductGroupId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier")
                         .HasColumnName("id");
@@ -210,22 +387,22 @@ namespace MoneyBoxWebsite.Migrations
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("name");
 
-                    b.HasKey("Id");
+                    b.HasKey("ProductGroupId");
 
                     b.ToTable("ProductGroups");
                 });
 
             modelBuilder.Entity("MoneyBoxWebsite.Models.ProductOrder", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<Guid>("ProductOrderId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier")
                         .HasColumnName("id");
 
-                    b.Property<Guid>("LinkedOrderId")
+                    b.Property<Guid>("LinkedOrderOrderId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("LinkedProductId")
+                    b.Property<Guid>("LinkedProductProductId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("Quantity")
@@ -236,30 +413,31 @@ namespace MoneyBoxWebsite.Migrations
                         .HasColumnType("real")
                         .HasColumnName("sell_price");
 
-                    b.HasKey("Id");
+                    b.HasKey("ProductOrderId");
 
-                    b.HasIndex("LinkedOrderId");
+                    b.HasIndex("LinkedOrderOrderId");
 
-                    b.HasIndex("LinkedProductId");
+                    b.HasIndex("LinkedProductProductId");
 
                     b.ToTable("ProductOrder");
                 });
 
             modelBuilder.Entity("MoneyBoxWebsite.Models.Review", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<Guid>("ReviewId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier")
                         .HasColumnName("id");
 
-                    b.Property<Guid>("CreatorId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<string>("CreatorId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<bool>("IsValidate")
                         .HasColumnType("bit")
                         .HasColumnName("validate");
 
-                    b.Property<Guid>("LinkedProductId")
+                    b.Property<Guid>("LinkedProductProductId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Message")
@@ -267,56 +445,79 @@ namespace MoneyBoxWebsite.Migrations
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("message");
 
-                    b.HasKey("Id");
+                    b.HasKey("ReviewId");
 
                     b.HasIndex("CreatorId");
 
-                    b.HasIndex("LinkedProductId");
+                    b.HasIndex("LinkedProductProductId");
 
                     b.ToTable("Reviews");
                 });
 
-            modelBuilder.Entity("MoneyBoxWebsite.Models.Role", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier")
-                        .HasColumnName("id");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("name");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Roles");
-                });
-
             modelBuilder.Entity("ProductProductGroup", b =>
                 {
-                    b.Property<Guid>("GroupedProductsId")
+                    b.Property<Guid>("GroupedProductsProductId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("ProductGroupsId")
+                    b.Property<Guid>("ProductGroupsProductGroupId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.HasKey("GroupedProductsId", "ProductGroupsId");
+                    b.HasKey("GroupedProductsProductId", "ProductGroupsProductGroupId");
 
-                    b.HasIndex("ProductGroupsId");
+                    b.HasIndex("ProductGroupsProductGroupId");
 
                     b.ToTable("ProductProductGroup");
                 });
 
-            modelBuilder.Entity("MoneyBoxWebsite.Models.Client", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
-                    b.HasOne("MoneyBoxWebsite.Models.Role", "CurrentRole")
-                        .WithMany("Users")
-                        .HasForeignKey("CurrentRoleId")
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
+                        .WithMany()
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
+                {
+                    b.HasOne("MoneyBoxWebsite.Models.Client", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
+                {
+                    b.HasOne("MoneyBoxWebsite.Models.Client", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
+                {
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
+                        .WithMany()
+                        .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("CurrentRole");
+                    b.HasOne("MoneyBoxWebsite.Models.Client", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
+                {
+                    b.HasOne("MoneyBoxWebsite.Models.Client", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("MoneyBoxWebsite.Models.Order", b =>
@@ -342,13 +543,13 @@ namespace MoneyBoxWebsite.Migrations
                 {
                     b.HasOne("MoneyBoxWebsite.Models.Order", "LinkedOrder")
                         .WithMany("OrderedProducts")
-                        .HasForeignKey("LinkedOrderId")
+                        .HasForeignKey("LinkedOrderOrderId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("MoneyBoxWebsite.Models.Product", "LinkedProduct")
                         .WithMany("ProductOrders")
-                        .HasForeignKey("LinkedProductId")
+                        .HasForeignKey("LinkedProductProductId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -367,7 +568,7 @@ namespace MoneyBoxWebsite.Migrations
 
                     b.HasOne("MoneyBoxWebsite.Models.Product", "LinkedProduct")
                         .WithMany("Reviews")
-                        .HasForeignKey("LinkedProductId")
+                        .HasForeignKey("LinkedProductProductId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -380,13 +581,13 @@ namespace MoneyBoxWebsite.Migrations
                 {
                     b.HasOne("MoneyBoxWebsite.Models.Product", null)
                         .WithMany()
-                        .HasForeignKey("GroupedProductsId")
+                        .HasForeignKey("GroupedProductsProductId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("MoneyBoxWebsite.Models.ProductGroup", null)
                         .WithMany()
-                        .HasForeignKey("ProductGroupsId")
+                        .HasForeignKey("ProductGroupsProductGroupId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
@@ -413,11 +614,6 @@ namespace MoneyBoxWebsite.Migrations
                     b.Navigation("ProductOrders");
 
                     b.Navigation("Reviews");
-                });
-
-            modelBuilder.Entity("MoneyBoxWebsite.Models.Role", b =>
-                {
-                    b.Navigation("Users");
                 });
 #pragma warning restore 612, 618
         }
