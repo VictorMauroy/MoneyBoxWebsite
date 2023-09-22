@@ -28,6 +28,8 @@ namespace MoneyBoxWebsite.Controllers
             _roleManager = roleManager;
         }
 
+        #region Register
+
         [AllowAnonymous]
         public IActionResult Register()
         {
@@ -56,19 +58,12 @@ namespace MoneyBoxWebsite.Controllers
                 CurrentTheme = Enum.GetName(typeof(Theme), 0)
             };
 
-            
-
-
-            /******************        REQUIRE PASSWORD HASHING ?      ******************/
-            IdentityResult result = await _userManager.CreateAsync(client, registerModel.Password);
-            
-            
-            
+            IdentityResult result = await _userManager.CreateAsync(client, registerModel.Password); //Auto Password HASHING
             
             if (result.Succeeded)
             {
                 Console.WriteLine("User created !");
-                await _userManager.AddToRoleAsync(client, "Client"); //Client has now the role CLIENT
+                await _userManager.AddToRoleAsync(client, "Client"); //The new user has now the role CLIENT
                 
                 Microsoft.AspNetCore.Identity.SignInResult resultSignIn = 
                     await _signInManager.PasswordSignInAsync(
@@ -92,7 +87,36 @@ namespace MoneyBoxWebsite.Controllers
 
             return View();
         }
+        #endregion
 
 
+        #region Login
+        
+        public IActionResult Login()
+        {
+            return View();
+        }
+
+        [AllowAnonymous, ValidateAntiForgeryToken, HttpPost, ActionName("Login")]
+        public async Task<IActionResult> Login(LoginViewModel loginModel)
+        {
+            Microsoft.AspNetCore.Identity.SignInResult resultSignIn =
+                await _signInManager.PasswordSignInAsync(
+                    loginModel.Username,
+                    loginModel.Password,
+                    loginModel.IsPersistent,
+                    false
+                );
+
+            if (resultSignIn.Succeeded)
+            {
+                Console.WriteLine("Successfully logged in!");
+                return RedirectToAction("Index", "Products");
+            }
+
+            return View();
+        }
+
+        #endregion
     }
 }
