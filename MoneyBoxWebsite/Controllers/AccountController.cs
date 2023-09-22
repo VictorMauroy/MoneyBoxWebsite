@@ -15,6 +15,7 @@ namespace MoneyBoxWebsite.Controllers
         Blue
     }
 
+    [Authorize]
     public class AccountController : Controller
     {
         private SignInManager<Client> _signInManager;
@@ -91,7 +92,7 @@ namespace MoneyBoxWebsite.Controllers
 
 
         #region Login
-        
+        [AllowAnonymous]
         public IActionResult Login()
         {
             return View();
@@ -116,7 +117,11 @@ namespace MoneyBoxWebsite.Controllers
 
             return View();
         }
-
         #endregion
+
+        /*public IActionResult Logout()
+        {
+            
+        }*/
     }
 }
