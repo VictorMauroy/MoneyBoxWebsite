@@ -34,13 +34,14 @@ namespace MoneyBoxWebsite.Controllers
             return View();
         }
 
+        [AllowAnonymous]
         [HttpPost, ActionName("Register")]
         [ValidateAntiForgeryToken]
-        [AllowAnonymous]
         public async Task<IActionResult> Register(RegisterViewModel registerModel)
         {
             if (!ModelState.IsValid)
             {
+                Console.WriteLine("Too bad");
                 return View();
             }
 
@@ -58,7 +59,7 @@ namespace MoneyBoxWebsite.Controllers
             
 
 
-            /******************         PASSWORD HASHING ?      ******************/
+            /******************        REQUIRE PASSWORD HASHING ?      ******************/
             IdentityResult result = await _userManager.CreateAsync(client, registerModel.Password);
             
             
@@ -66,19 +67,21 @@ namespace MoneyBoxWebsite.Controllers
             
             if (result.Succeeded)
             {
+                Console.WriteLine("User created !");
                 await _userManager.AddToRoleAsync(client, "Client"); //Client has now the role CLIENT
                 
                 Microsoft.AspNetCore.Identity.SignInResult resultSignIn = 
                     await _signInManager.PasswordSignInAsync(
                         registerModel.Username, 
                         registerModel.Password, 
-                        registerModel.RememberMe, // Add a cookie ? Right ?
+                        false,
                         false
                     );
 
                 if (resultSignIn.Succeeded)
                 {
-                    return RedirectToAction("Index", "Library");
+                    Console.WriteLine("Signed in !");
+                    return RedirectToAction("Index", "Products");
                 }
 
                 foreach (IdentityError error in result.Errors)

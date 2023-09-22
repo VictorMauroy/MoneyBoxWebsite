@@ -8,7 +8,7 @@
 
 <div class="row">
     
-    <form id="registerForm" action="/Account/Register" method="post">
+    <form id="registerForm" asp-action="Register" method="post">
         <h2>Create a new account.</h2>
         <hr />
 
@@ -40,6 +40,18 @@
             <span asp-validation-for="Email" class="text-danger"></span>
         </div>
 
+        <div class="form-floating mb-3">
+            <input asp-for="Password" class="form-control" aria-required="true" autocomplete="on" placeholder="******" />
+            <label asp-for="Password">Password</label>
+            <span asp-validation-for="Password" class="text-danger"></span>
+        </div>
+
+        <div class="form-floating mb-3">
+            <input asp-for="ConfirmedPassword" class="form-control" aria-required="true" autocomplete="on" placeholder="******" />
+            <label asp-for="ConfirmedPassword">ConfirmedPassword</label>
+            <span asp-validation-for="ConfirmedPassword" class="text-danger"></span>
+        </div>
+
         <!-- TEMPORARY, I'll make a greater one later. -->
         <div class="form-floating mb-3">
             <input asp-for="Address" class="form-control" aria-required="true" autocomplete="on" placeholder="1 rue des Champs 80808 Perduville, France" />
@@ -53,9 +65,13 @@
             <span asp-validation-for="PhoneNumber" class="text-danger"></span>
         </div>
 
-        <div class="container py-2">
-            <input class="btn btn-dark " type="submit" value="Register" />
+        <div class="form-floating mb-3">
+            <button type="submit" class="btn btn-success">
+                Register
+            </button>
         </div>
+
+        <span asp-validation-summary="All" class="text-danger"></span>
     </form>
     
 </div>
