@@ -44,7 +44,6 @@ namespace MoneyBoxWebsite.Controllers
         {
             if (!ModelState.IsValid)
             {
-                Console.WriteLine("Too bad");
                 return View();
             }
 
@@ -63,7 +62,6 @@ namespace MoneyBoxWebsite.Controllers
             
             if (result.Succeeded)
             {
-                Console.WriteLine("User created !");
                 await _userManager.AddToRoleAsync(client, "Client"); //The new user has now the role CLIENT
                 
                 Microsoft.AspNetCore.Identity.SignInResult resultSignIn = 
@@ -76,7 +74,6 @@ namespace MoneyBoxWebsite.Controllers
 
                 if (resultSignIn.Succeeded)
                 {
-                    Console.WriteLine("Signed in !");
                     return RedirectToAction("Index", "Products");
                 }
 
@@ -111,7 +108,6 @@ namespace MoneyBoxWebsite.Controllers
 
             if (resultSignIn.Succeeded)
             {
-                Console.WriteLine("Successfully logged in!");
                 return RedirectToAction("Index", "Products");
             }
 
@@ -119,9 +115,10 @@ namespace MoneyBoxWebsite.Controllers
         }
         #endregion
 
-        /*public IActionResult Logout()
+        public async Task<IActionResult> Logout()
         {
-            
-        }*/
+            await _signInManager.SignOutAsync();
+            return RedirectToAction("Index", "Products");
+        }
     }
 }
