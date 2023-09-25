@@ -1,15 +1,18 @@
-﻿namespace MoneyBoxWebsite.Repositories
+﻿using MoneyBoxWebsite.Models;
+
+namespace MoneyBoxWebsite.Repositories
 {
     public interface IUserRepository
     {
         /* On-going work, could be used later */
+        Task<IEnumerable<Client>> GetAllClients();
+        Task<Client> GetClientById(Guid id);
 
-        void ChangePasswordAsync(string newPassword);
-        void ChangeUsernameAsync(string newUsername);
-        void ChangeAddressAsync(string newAddress);
+        Task ChangePasswordAsync(Guid id, string currentPassword, string newPassword);
+        Task ChangeUsernameAsync(Guid id, string newUsername);
+        Task ChangeAddressAsync(Guid id, string newAddress);
 
-        void CreateUserAsync();
-        void DisableUserAsync();
-        void SaveChangesAsync();
+        Task ChangeUserActivationAsync(Guid id, bool activeState);
+        Task SaveChangesAsync();
     }
 }
