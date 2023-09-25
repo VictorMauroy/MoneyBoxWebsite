@@ -8,11 +8,13 @@ namespace MoneyBoxWebsite.Models.ViewModels
         public required string Username { get; set; }
         
         [DataType(DataType.Text)]
-        [RegularExpression(@"^[A-Za-z]+$", ErrorMessage = "Enter only letters.")]
+        [StringLength(50, MinimumLength = 2, ErrorMessage = "Firstname must be between 2 and 50 characters.")]
+        [RegularExpression(@"^[A-Za-z\s]+$", ErrorMessage = "Name can only contain letters and spaces.")]
         public required string FirstName { get; set; }
         
         [DataType(DataType.Text)]
-        [RegularExpression(@"^[A-Za-z]+$", ErrorMessage = "Enter only letters.")]
+        [StringLength(50, MinimumLength = 2, ErrorMessage = "Lastname must be between 2 and 50 characters.")]
+        [RegularExpression(@"^[A-Za-z\s]+$", ErrorMessage = "Name can only contain letters and spaces.")]
         public required string LastName { get; set; }
         
         [DataType(DataType.EmailAddress)] //[EmailAddress] is an alternative.
@@ -20,7 +22,7 @@ namespace MoneyBoxWebsite.Models.ViewModels
 
         [DataType(DataType.Password)] //Hide every character entered by the user.
         [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
-        [RegularExpression(@"^(?=(.*\d))(?=(.*[A-Z]))(?=(.*[a-z]))(?=(.*[^A-Za-z0-9]))(?=.*(.)(.*\1))", 
+        [RegularExpression(@"^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*\W).+$", 
             ErrorMessage = "The password must contains at least one number, one lowercase and one uppercase letter and lastly, one non-alphanumeric character.")] 
         public required string Password { get; set; }
 
@@ -29,7 +31,8 @@ namespace MoneyBoxWebsite.Models.ViewModels
         public required string ConfirmedPassword { get; set; }
 
         [DataType(DataType.Text)]
-        public required string Address { get; set; }
+        [StringLength(50, MinimumLength = 2, ErrorMessage = "Address must be between 5 and 150 characters.")]
+        public required string Address { get; set; } //Temporary
 
         public required string PhoneNumber { get; set; }
     }
