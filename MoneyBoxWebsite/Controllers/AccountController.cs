@@ -47,7 +47,7 @@ namespace MoneyBoxWebsite.Controllers
                 return View();
             }
 
-            //You shouldn't make that, I'll try updating that later
+            //I shouldn't make that, I'll try updating that later
             string address =
                 registerModel.StreetNumber + " " +
                 registerModel.StreetName + " " +
@@ -127,6 +127,12 @@ namespace MoneyBoxWebsite.Controllers
         {
             await _signInManager.SignOutAsync();
             return RedirectToAction("Index", "Products");
+        }
+
+        public IActionResult AccessDenied()
+        {
+            Console.WriteLine("Access Denied");
+            return View();
         }
     }
 }

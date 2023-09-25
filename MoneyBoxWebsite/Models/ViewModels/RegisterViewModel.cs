@@ -27,7 +27,7 @@ namespace MoneyBoxWebsite.Models.ViewModels
         public required string Password { get; set; }
 
         [DataType(DataType.Password)]
-        [Compare("Password", ErrorMessage = "The password and confirmation password does not match.")] //Allow to compare two field
+        [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")] //Allow to compare two field
         public required string ConfirmedPassword { get; set; }
 
         // Numéro de rue

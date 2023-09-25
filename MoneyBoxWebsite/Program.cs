@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.Extensions.Options;
 using MoneyBoxWebsite.Data;
 using System;
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 namespace MoneyBoxWebsite
 {
@@ -74,6 +75,18 @@ namespace MoneyBoxWebsite
                 options.LoginPath = "/Identity/Account/Login";
                 options.AccessDeniedPath = "/Identity/Account/AccessDenied";
                 options.SlidingExpiration = true;
+            });
+
+            builder.Services.AddAuthentication(options =>
+            {
+                options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme; // Default
+                options.DefaultChallengeScheme = CookieAuthenticationDefaults.AuthenticationScheme; // Default
+            })
+            .AddCookie(options =>
+            {
+                //In case your are trying to load a page that uses the attribute Authorize :
+                options.LoginPath = "/Account/Login"; // When not authenticated, you'll be redirected to that page.
+                options.AccessDeniedPath = "/Account/AccessDenied"; // When you doesn't have the right role.
             });
 
 
