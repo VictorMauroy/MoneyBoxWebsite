@@ -1,0 +1,50 @@
+﻿@using Microsoft.AspNetCore.Identity;
+@model IEnumerable<MoneyBoxWebsite.Models.Client>
+@inject UserManager<Client> UserManager
+
+@{
+    ViewData["Title"] = "Client manager";
+}
+
+
+<h1 class="title">@ViewData["Title"]</h1>
+
+<div class="row">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.UserName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.FirstName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Name)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Email)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.PhoneNumber)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.AccountEnabled)
+                </th>
+                <th>
+                    <!-- Add the role field -->
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+        @foreach (Client client in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => client.Name)
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+</div>

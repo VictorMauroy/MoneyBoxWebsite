@@ -55,51 +55,51 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
+@foreach (Product product in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.Name)
+                @Html.DisplayFor(modelItem => product.Name)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Reference)
+                @Html.DisplayFor(modelItem => product.Reference)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Description)
+                @Html.DisplayFor(modelItem => product.Description)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Price)
+                @Html.DisplayFor(modelItem => product.Price)
             </td>
             <td>
-                <img class="contained" src="@item.ImageFilePath" width="200" height="200" alt="Image of @item.Name" />
+                <img class="contained" src="@product.ImageFilePath" width="200" height="200" alt="Image of @product.Name" />
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Height)
+                @Html.DisplayFor(modelItem => product.Height)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Width)
+                @Html.DisplayFor(modelItem => product.Width)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Length)
+                @Html.DisplayFor(modelItem => product.Length)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Weigth)
+                @Html.DisplayFor(modelItem => product.Weigth)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Color)
+                @Html.DisplayFor(modelItem => product.Color)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Manufacturer)
+                @Html.DisplayFor(modelItem => product.Manufacturer)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.MoneyCapacity)
+                @Html.DisplayFor(modelItem => product.MoneyCapacity)
             </td>
             @*<td>
-                @Html.DisplayFor(modelItem => item.Visibility)
+                @Html.DisplayFor(modelItem => product.Visibility)
             </td>*@
             <td>
-                <a asp-action="Edit" asp-route-id="@item.ProductId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.ProductId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.ProductId">Delete</a>
+                <a asp-action="Edit" asp-route-id="@product.ProductId">Edit</a> |
+                <a asp-action="Details" asp-route-id="@product.ProductId">Details</a> |
+                <a asp-action="Delete" asp-route-id="@product.ProductId">Delete</a>
             </td>
         </tr>
 }
