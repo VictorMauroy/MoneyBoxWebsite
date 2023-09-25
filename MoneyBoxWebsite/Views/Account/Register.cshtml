@@ -52,11 +52,35 @@
             <span asp-validation-for="ConfirmedPassword" class="text-danger"></span>
         </div>
 
-        <!-- TEMPORARY, I'll make a greater one later. -->
         <div class="form-floating mb-3">
-            <input asp-for="Address" class="form-control" aria-required="true" autocomplete="on" placeholder="1 rue des Champs 80808 Perduville, France" />
-            <label asp-for="Address">Address</label>
-            <span asp-validation-for="Address" class="text-danger"></span>
+            <input asp-for="StreetNumber" class="form-control" aria-required="true" autocomplete="on" placeholder="" />
+            <label asp-for="StreetNumber">Street number</label>
+            <span asp-validation-for="StreetNumber" class="text-danger"></span>
+        </div>
+        
+        <div class="form-floating mb-3">
+            <input asp-for="StreetName" class="form-control" aria-required="true" autocomplete="on" placeholder="rue des Fontaines" />
+            <label asp-for="StreetName">Street name</label>
+            <span asp-validation-for="StreetName" class="text-danger"></span>
+        </div>
+
+        
+        <div class="form-floating mb-3">
+            <input asp-for="PostalCode" class="form-control" aria-required="true" autocomplete="on" placeholder="59000" />
+            <label asp-for="PostalCode">Postal code</label>
+            <span asp-validation-for="PostalCode" class="text-danger"></span>
+        </div>
+        
+        <div class="form-floating mb-3">
+            <input asp-for="City" class="form-control" aria-required="true" autocomplete="on" placeholder="Lille" />
+            <label asp-for="City">City</label>
+            <span asp-validation-for="City" class="text-danger"></span>
+        </div>
+
+        <div class="form-floating mb-3">
+            <input asp-for="Country" class="form-control" aria-required="true" autocomplete="on" placeholder="France" />
+            <label asp-for="Country">Country</label>
+            <span asp-validation-for="Country" class="text-danger"></span>
         </div>
 
         <div class="form-floating mb-3">
@@ -71,7 +95,7 @@
             </button>
         </div>
 
-        <span asp-validation-summary="All" class="text-danger"></span>
+        <span asp-validation-summary="ModelOnly" class="text-danger"></span>
     </form>
     
 </div>

@@ -47,12 +47,20 @@ namespace MoneyBoxWebsite.Controllers
                 return View();
             }
 
+            //You shouldn't make that, I'll try updating that later
+            string address =
+                registerModel.StreetNumber + " " +
+                registerModel.StreetName + " " +
+                registerModel.PostalCode + " " +
+                registerModel.City + ", " +
+                registerModel.Country;
+
             Client client = new Client
             {
                 FirstName = registerModel.FirstName,
                 Name = registerModel.LastName,
                 Email = registerModel.Email,
-                Address = registerModel.Address,
+                Address = address,
                 PhoneNumber = registerModel.PhoneNumber,
                 UserName = registerModel.Username,
                 CurrentTheme = Enum.GetName(typeof(Theme), 0)
