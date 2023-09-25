@@ -1,11 +1,11 @@
 ﻿@using Microsoft.AspNetCore.Identity;
 @model IEnumerable<MoneyBoxWebsite.Models.Client>
-@inject UserManager<Client> UserManager
 
 @{
     ViewData["Title"] = "Client manager";
 }
 
+@inject UserManager<Client> UserManager
 
 <h1 class="title">@ViewData["Title"]</h1>
 
@@ -32,7 +32,7 @@
                     @Html.DisplayNameFor(model => model.AccountEnabled)
                 </th>
                 <th>
-                    <!-- Add the role field -->
+                    Role
                 </th>
             </tr>
         </thead>
@@ -41,7 +41,31 @@
         {
             <tr>
                 <td>
+                    @Html.DisplayFor(modelItem => client.UserName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => client.FirstName)
+                </td>
+                <td>
                     @Html.DisplayFor(modelItem => client.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => client.Email)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => client.PhoneNumber)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => client.AccountEnabled)
+                </td>
+                <td>
+                    @{
+                        IList<String> roles = await UserManager.GetRolesAsync(client);
+                    }
+                    @foreach (var role in roles)
+                    {
+                        @role
+                    }
                 </td>
             </tr>
         }
