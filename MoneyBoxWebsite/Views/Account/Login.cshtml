@@ -8,12 +8,9 @@
 
 <div class="row">
 
-    <form asp-action="Login" method="post">
+    <form asp-controller="Account" asp-action="Login" method="post">
         <h2>Sign in to your account</h2>
         <hr />
-
-        <!-- Show errors about the model / the data given by the user -->
-        <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
 
         <div class="form-floating mb-3">
             <input asp-for="Username" class="form-control" aria-required="true" autocomplete="on" placeholder="TheNamedOne" />
@@ -39,7 +36,7 @@
             </button>
         </div>
 
-        <span asp-validation-summary="All" class="text-danger"></span>
+        <div asp-validation-summary="All" class="text-danger" role="alert"></div>
     </form>
 
 </div>

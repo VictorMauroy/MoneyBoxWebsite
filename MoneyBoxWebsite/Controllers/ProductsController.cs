@@ -13,7 +13,6 @@ using MoneyBoxWebsite.Repositories;
 
 namespace MoneyBoxWebsite.Controllers
 {
-    [Authorize(Roles ="Admin")]
     public class ProductsController : Controller
     {
         private readonly IProductRepository _productRepository;

@@ -31,14 +31,14 @@ namespace MoneyBoxWebsite.Controllers
 
         #region Register
 
-        [AllowAnonymous, Route("/register")]
+        [AllowAnonymous, Route("/Register")]
         public IActionResult Register()
         {
             return View();
         }
 
         [AllowAnonymous]
-        [HttpPost, ActionName("Register")]
+        [HttpPost, Route("/Register")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Register(RegisterViewModel registerModel)
         {
@@ -97,15 +97,16 @@ namespace MoneyBoxWebsite.Controllers
 
 
         #region Login
-        [AllowAnonymous, Route("/login")]
+        [AllowAnonymous, Route("/Login")]
         public IActionResult Login()
         {
             return View();
         }
 
-        [AllowAnonymous, ValidateAntiForgeryToken, HttpPost, ActionName("Login")]
+        [AllowAnonymous, ValidateAntiForgeryToken, HttpPost, Route("/Login")]
         public async Task<IActionResult> Login(LoginViewModel loginModel)
         {
+            Console.WriteLine("Trying to login");
             Microsoft.AspNetCore.Identity.SignInResult resultSignIn =
                 await _signInManager.PasswordSignInAsync(
                     loginModel.Username,
@@ -129,7 +130,7 @@ namespace MoneyBoxWebsite.Controllers
             return RedirectToAction("Index", "Products");
         }
 
-        [Route("/accessdenied")]
+        [AllowAnonymous, Route("/accessdenied")]
         public IActionResult AccessDenied()
         {
             Console.WriteLine("Access Denied");
