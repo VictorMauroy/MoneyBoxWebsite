@@ -31,7 +31,7 @@ namespace MoneyBoxWebsite.Controllers
 
         #region Register
 
-        [AllowAnonymous]
+        [AllowAnonymous, Route("/register")]
         public IActionResult Register()
         {
             return View();
@@ -97,7 +97,7 @@ namespace MoneyBoxWebsite.Controllers
 
 
         #region Login
-        [AllowAnonymous]
+        [AllowAnonymous, Route("/login")]
         public IActionResult Login()
         {
             return View();
@@ -129,6 +129,7 @@ namespace MoneyBoxWebsite.Controllers
             return RedirectToAction("Index", "Products");
         }
 
+        [Route("/accessdenied")]
         public IActionResult AccessDenied()
         {
             Console.WriteLine("Access Denied");
