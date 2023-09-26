@@ -24,3 +24,55 @@ body {
 .contained{
     object-fit:contain;
 }
+
+/*   Classes for gallery of products    */
+.product-gallery {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.product-item {
+    width: 25%;
+    padding: 10px;
+}
+
+.product-image {
+    position: relative;
+    background-size: cover;
+    background-position: center;
+    height: 300px;
+}
+
+.product-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 30%;
+    background-color: rgba(0, 0, 0, 0.4);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+    .product-overlay h3, .product-overlay p {
+        color: #fff;
+        margin: 0;
+    }
+
+@media (max-width: 768px) {
+    .product-item {
+        width: 50%; /* Two items per row on smaller screens */
+    }
+}
+
+@media (max-width: 480px) {
+    .product-item {
+        width: 100%; /* One item per row on even smaller screens */
+    }
+}
