@@ -25,15 +25,6 @@
                 <th>
                     @Html.DisplayNameFor(model => model.Email)
                 </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.PhoneNumber)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.AccountEnabled)
-                </th>
-                <th>
-                    Role
-                </th>
             </tr>
         </thead>
         <tbody>
@@ -53,19 +44,9 @@
                     @Html.DisplayFor(modelItem => client.Email)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => client.PhoneNumber)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => client.AccountEnabled)
-                </td>
-                <td>
-                    @{
-                        IList<String> roles = await UserManager.GetRolesAsync(client);
-                    }
-                    @foreach (var role in roles)
-                    {
-                        @role
-                    }
+                    <a asp-action="Manage" asp-route-id="@client.Id">
+                        Manage
+                    </a>
                 </td>
             </tr>
         }

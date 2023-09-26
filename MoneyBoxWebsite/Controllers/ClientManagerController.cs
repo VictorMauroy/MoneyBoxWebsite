@@ -25,5 +25,13 @@ namespace MoneyBoxWebsite.Controllers
                                                   select client; // Show the last created accounts first.
             return View(orderedClients);
         }
+
+
+        public async Task<IActionResult> Manage(Guid id)
+        {
+            Client client = await _userRepository.GetClientById(id);
+
+            return View(client);
+        }
     }
 }
