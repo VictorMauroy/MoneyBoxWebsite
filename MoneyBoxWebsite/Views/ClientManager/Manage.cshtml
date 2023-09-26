@@ -4,56 +4,65 @@
     ViewData["Title"] = "Manage";
 }
 
-<h1>@ViewData["Title"]</h1>
+<h1>Updating <span style="color: red;">@Model.UserName</span></h1>
 
-<h3>Updating <span style="color: red;">@Model.UserName</span></h3>
 <br />
 
 <div class="d-flex">
-    <h4>Informations</h4>
-    <dl class="row flex-fill">
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.UserName)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.UserName)
-        </dd>
+    <div class="row flex-fill">
+        <h4>Informations</h4>
 
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.FirstName)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.FirstName)
-        </dd>
+        <dl >
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.UserName)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.UserName)
+            </dd>
 
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Name)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Name)
-        </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.FirstName)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.FirstName)
+            </dd>
 
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Email)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Email)
-        </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Name)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Name)
+            </dd>
+
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Email)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Email)
+            </dd>
         
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.PhoneNumber)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.PhoneNumber)
-        </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.PhoneNumber)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.PhoneNumber)
+            </dd>
         
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Address)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Address)
-        </dd>
-    </dl>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Address)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Address)
+            </dd>
+
+            <dt class="col-sm-2">
+                Role
+            </dt>
+            <dd class="col-sm-10">
+                @ViewBag.CurrentRole
+            </dd>
+        </dl>
+    </div>
 
     <div class ="row flex-fill">
         <form asp-action="ChangeActivationState" asp-route-id="@Model.Id">
@@ -74,17 +83,36 @@
             </div>
         </form>
 
-        <form asp-action="ChangeRole" asp-route-id="@Model.Id">
+        <form asp-action="ChangeRole" asp-controller="ClientManager" asp-route-id="@Model.Id">
             <h4>Change user role</h4>
-            <div class="form-floating mb-3">
-                @*<input asp-for="PhoneNumber" class="form-control" aria-required="true" autocomplete="on" placeholder="0123456789" />
-                <label asp-for="PhoneNumber">PhoneNumber</label>
-                <span asp-validation-for="PhoneNumber" class="text-danger"></span>*@
-                
-            </div>
+            
+            <!--When using a ViewModel, it is possible to use tag helpers-->
+            @*<select asp-for="SelectedOption" asp-items="selectList"></select>*@
+
+            <label for="SelectedRole">New Role selection:</label>
+            <select class="form-select" name="SelectedRole" style="margin-bottom: 7px">
+                <option value="">Select a Role</option>
+                @foreach (var role in ViewBag.RolesList)
+                {
+                    if (role != ViewBag.CurrentRole)
+                    {
+                        <option value="@role">@role</option>
+                    } else
+                    {
+                        <option selected="selected" value="@role">@role</option>
+                    }
+                }
+            </select>
+
+            <input type="hidden" name="UserId" value="@Model.Id"/>
+            <input type="hidden" name="PreviousRole" value="@ViewBag.CurrentRole"/>
+
+            <button type="submit" class="btn btn-success">
+                <span>Apply</span>
+            </button>
         </form>
     </div>
 
 </div>
 
-<a asp-action="Index">Back to List</a>
+<a asp-action="Index" style="font-size:20px">Back to List</a>
