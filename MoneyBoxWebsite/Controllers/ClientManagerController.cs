@@ -14,7 +14,7 @@ using Microsoft.IdentityModel.Tokens;
 
 namespace MoneyBoxWebsite.Controllers
 {
-    //[Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Admin, Manager")]
     public class ClientManagerController : Controller
     {
         private IUserRepository _userRepository;
@@ -62,6 +62,7 @@ namespace MoneyBoxWebsite.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> ChangeRole(Guid id)
         {
             string newRole = Request.Form["SelectedRole"];
