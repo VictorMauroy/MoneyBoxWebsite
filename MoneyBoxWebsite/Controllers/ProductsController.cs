@@ -13,6 +13,7 @@ using MoneyBoxWebsite.Repositories;
 
 namespace MoneyBoxWebsite.Controllers
 {
+    [Authorize(Roles = "Admin, Manager, Assistant")]
     public class ProductsController : Controller
     {
         private readonly IProductRepository _productRepository;
@@ -23,12 +24,14 @@ namespace MoneyBoxWebsite.Controllers
         }
 
         // GET: Products
+        [AllowAnonymous, Route("/")]
         public async Task<IActionResult> Index()
         {
             return View(await _productRepository.GetAllAsync());
         }
 
         // GET: Products/Details/5
+        [AllowAnonymous]
         public async Task<IActionResult> Details(Guid id)
         {
             var product = await _productRepository.GetByIdAsync(id);
@@ -47,8 +50,6 @@ namespace MoneyBoxWebsite.Controllers
         }
 
         // POST: Products/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(ProductViewModel productCreation)
