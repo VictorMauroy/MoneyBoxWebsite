@@ -53,11 +53,13 @@ namespace MoneyBoxWebsite.Controllers
             return View(client);
         }
 
-        /*[HttpPost]
-        public async Task<IActionResult> ChangeActivationState()
+        [HttpPost]
+        public async Task<IActionResult> ChangeActivationState(Guid id, bool activeState)
         {
+            await _userRepository.ChangeUserActivationAsync(id, !activeState);
 
-        }*/
+            return RedirectToAction("Manage", new { id });
+        }
 
         [HttpPost]
         public async Task<IActionResult> ChangeRole(Guid id)
