@@ -73,7 +73,7 @@ namespace MoneyBoxWebsite.Controllers
             if(await _roleManager.RoleExistsAsync(newRole))
                 await _userManager.AddToRoleAsync(client, newRole);
 
-            return RedirectToAction("Manage", new {id = id});
+            return RedirectToAction("Manage", new { id });
         }
     }
 }
