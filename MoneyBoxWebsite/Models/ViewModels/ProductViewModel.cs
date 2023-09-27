@@ -19,7 +19,7 @@ namespace MoneyBoxWebsite.Models.ViewModels
         [DataType(DataType.Upload)]
         public required IFormFile Image { get; set; }
 
-        public string GroupName { get; set; } = "";
+        public List<Guid> GroupIds { get; set; } = new();
         public required string Color { get; set; }
     }
 }

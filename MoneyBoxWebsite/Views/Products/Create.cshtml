@@ -83,11 +83,11 @@
 
             <div class="form-group">
                 <label for="SelectedGroup">Group of products</label>
-                <select class="form-select" name="SelectedGroup" style="margin-bottom: 7px">
+                <select class="form-select" name="SelectedGroup" style="margin-bottom: 7px" multiple>
                     <option value="">Select a group of products</option>
-                    @foreach (string groupName in ViewBag.GroupNames)
+                    @foreach (ProductGroup group in ViewBag.Groups)
                     {
-                        <option value="@groupName">@groupName</option>
+                        <option value="@group.ProductGroupId">@group.Name</option>
                     }
                 </select>
             </div>

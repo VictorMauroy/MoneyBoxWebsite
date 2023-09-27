@@ -48,9 +48,11 @@ namespace MoneyBoxWebsite.Controllers
         public async Task<IActionResult> Create()
         {
             IEnumerable<ProductGroup> groups = await _productRepository.GetAllGroupsAsync();
-            List<string> groupNames = (from ProductGroup groupElement in groups
-                                      select groupElement.Name).ToList();
-            ViewBag.GroupNames = groupNames;
+            List<ProductGroup> orderedGroups = (from ProductGroup groupElement in groups
+                                                orderby groupElement
+                                                select groupElement)
+                                                .ToList();
+            ViewBag.Groups = orderedGroups;
             
             return View();
         }
@@ -77,6 +79,16 @@ namespace MoneyBoxWebsite.Controllers
                     Manufacturer = productCreation.Manufacturer,
                     Color = productCreation.Color
                 };
+
+                if (productCreation.GroupIds.Count > 1)
+                {
+                    foreach (Guid groupId in productCreation.GroupIds)
+                    {
+                        ProductGroup? group = await _productRepository.GetGroupByIdAsync(groupId);
+                        if (group != null)
+                            product.ProductGroups.Add(group);
+                    }
+                }
 
                 await _productRepository.CreateAsync(product); // Create and save
                 
@@ -232,7 +244,6 @@ namespace MoneyBoxWebsite.Controllers
                 return RedirectToAction("ProductGroupIndex");
 
             Guid id = Guid.Parse(groupId);
-            Console.WriteLine("\n \n Removing \n \n");
             await _productRepository.RemoveGroupAsync(id);
             return RedirectToAction("ProductGroupIndex");
         }
