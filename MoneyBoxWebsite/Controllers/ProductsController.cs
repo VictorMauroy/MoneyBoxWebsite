@@ -64,7 +64,7 @@ namespace MoneyBoxWebsite.Controllers
                     Height = productCreation.Height,
                     Width = productCreation.Width,
                     Length = productCreation.Length,
-                    Weigth = productCreation.Weight,
+                    Weight = productCreation.Weight,
                     MoneyCapacity = productCreation.MoneyCapacity,
                     ImageFilePath = "",
                     Reference = "#" + "",
@@ -83,10 +83,12 @@ namespace MoneyBoxWebsite.Controllers
         public async Task<IActionResult> Edit(Guid id)
         {
             var product = await _productRepository.GetByIdAsync(id);
-            if (product == null)
+            /*if (product == null)
             {
                 return NotFound();
-            }
+            }*/
+
+            Console.WriteLine("\n \n Editing product. \n \n");
 
             return View(product);
         }
@@ -108,7 +110,7 @@ namespace MoneyBoxWebsite.Controllers
                 product.Length = editedProduct.Length;
                 product.Manufacturer = editedProduct.Manufacturer;
                 product.Color = editedProduct.Color;
-                product.Weigth = editedProduct.Weight;
+                product.Weight = editedProduct.Weight;
                 product.ImageFilePath = "";
 
                 try

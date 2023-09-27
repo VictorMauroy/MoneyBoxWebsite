@@ -34,7 +34,7 @@ namespace MoneyBoxWebsite.Models
         public float Length { get; set; } = 0;
 
         [Column("weight")]
-        public float Weigth { get; set; } = 0;
+        public float Weight { get; set; } = 0;
 
         [Column("color")]
         public required string Color { get; set; }
