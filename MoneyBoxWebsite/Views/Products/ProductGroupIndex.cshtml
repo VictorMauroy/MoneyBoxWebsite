@@ -1,5 +1,76 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@model IEnumerable<MoneyBoxWebsite.Models.ProductGroup>
 @{
+    ViewData["Title"] = "All groups";
 }
+
+<div class="btn-bar-container">
+    <h1 class="btn-bar-title">All the product groups</h1>
+    <a asp-action="Create" class="btn btn-primary">Back to product creation</a>
+</div>
+
+<br />
+
+<p style="font-size:20px">Product groups are used to merge products into a same group. <br />
+    It is recommended to use if you want to <u>group them by color or similarities</u>.
+</p>
+
+<br />
+
+<article>
+    <form asp-action="AddProductGroup">
+        <h3>Create a <b>new product group</b></h3>
+        
+        <div class="form-group">
+            <label for="Name" class="control-label"></label>
+            <input type="text" for="Name" name="Name" class="form-control" />
+        </div>
+
+        <div class="form-group">
+            <input type="submit" value="Create" class="btn btn-primary" />
+        </div>
+
+        @if (!string.IsNullOrEmpty(ViewBag.AddGroupErrors))
+        {
+            <span class="text-danger">@ViewBag.AddGroupErrors</span>
+        }
+    </form>
+</article>
+
+<br />
+
+<article>
+    <h3>Existing groups</b></h3>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    Group name
+                </th>
+                <th>
+                    Linked products
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach(ProductGroup group in Model)
+            {
+                <tr>
+                    <td>
+                        @group.Name
+                    </td>
+                    <td>
+                        @foreach (Product product in group.GroupedProducts)
+                        {
+                            <span>product.Name</span> <br />
+                        }
+                    </td>
+                    <td>
+                        <a asp-action="GroupDetails" asp-route-id="@group.ProductGroupId">More</a>
+                        <a asp-action="RemoveProductGroup" asp-route-id="@group.ProductGroupId">Delete</a>
+                    </td>
+                </tr>                
+            }
+        </tbody>
+    </table>
+</article>

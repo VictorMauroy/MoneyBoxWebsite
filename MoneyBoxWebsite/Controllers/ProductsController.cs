@@ -23,6 +23,7 @@ namespace MoneyBoxWebsite.Controllers
             this._productRepository = productRepository;
         }
 
+        #region Products
         // GET: Products
         [AllowAnonymous, Route("/")]
         public async Task<IActionResult> Index()
@@ -81,45 +82,6 @@ namespace MoneyBoxWebsite.Controllers
                 
                 return RedirectToAction(nameof(Index));
             }
-            return View();
-        }
-
-        public async Task<IActionResult> ProductGroupIndex()
-        {
-            IEnumerable<ProductGroup> productGroups = await _productRepository.GetAllGroupsAsync();
-            List<ProductGroup> orderedGroups = (from productGroup in productGroups
-                                               orderby productGroup.Name
-                                               select productGroup).ToList();
-            return View(orderedGroups);
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> AddProductGroup(string name)
-        {
-            ProductGroup group = new() { Name = name };
-            await _productRepository.CreateGroupAsync(group);
-            return View("ProductGroupIndex");
-        }
-
-        public async Task<IActionResult> EditGroup(Guid id)
-        {
-            ProductGroup? group = await _productRepository.GetGroupByIdAsync(id);
-            if (group == null)
-                return NotFound();
-
-            return View(group);
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> EditGroup(Guid id, string newName)
-        {
-            ProductGroup? group = await _productRepository.GetGroupByIdAsync(id);
-            if (group == null)
-                return NotFound(); // Could it be null if removed by another user ?
-
-            group.Name = newName;
-            await _productRepository.UpdateGroupAsync(group);
-            
             return View();
         }
 
@@ -191,5 +153,89 @@ namespace MoneyBoxWebsite.Controllers
             
             return RedirectToAction(nameof(Index));
         }
+        #endregion
+
+        #region Product Groups
+        public async Task<IActionResult> ProductGroupIndex()
+        {
+            IEnumerable<ProductGroup> productGroups = await _productRepository.GetAllGroupsAsync();
+            List<ProductGroup> orderedGroups = (from productGroup in productGroups
+                                                orderby productGroup.Name
+                                                select productGroup).ToList();
+            return View(orderedGroups);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AddProductGroup(string name)
+        {
+            if (name == null)
+            {
+                ViewBag.AddGroupErrors = "Please enter a valid group name.";
+                return RedirectToAction("ProductGroupIndex");
+            }
+            else
+            {
+                ViewBag.AddGroupErrors = "";
+            }
+
+            ProductGroup group = new() { Name = name };
+            await _productRepository.CreateGroupAsync(group);
+            return RedirectToAction("ProductGroupIndex");
+        }
+
+        public async Task<IActionResult> GroupDetails(Guid id)
+        {
+            ProductGroup? group = await _productRepository.GetGroupByIdAsync(id);
+            if (group == null)
+                return NotFound();
+
+            return View(group);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> EditGroup(Guid id, string newName)
+        {
+            if (newName == null)
+            {
+                ViewBag.EditGroupErrors = "Please enter a valid group name.";
+                return RedirectToAction("GroupDetails", new { id });
+            } else
+            {
+                ViewBag.EditGroupErrors = "";
+            }
+
+            ProductGroup? group = await _productRepository.GetGroupByIdAsync(id);
+            if (group == null)
+                return NotFound(); // Could it be null if removed by another user ?
+
+            group.Name = newName;
+            await _productRepository.UpdateGroupAsync(group);
+
+            return RedirectToAction("GroupDetails", new {id});
+        }
+
+
+        public async Task<IActionResult> RemoveProductGroup(Guid id)
+        {
+            ProductGroup? group = await _productRepository.GetGroupByIdAsync(id);
+            if(group == null)
+                return NotFound();
+
+            return View(group);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> DeleteGroup()
+        {
+            string groupId = Request.Form["groupId"];
+            if (string.IsNullOrEmpty(groupId)) 
+                return RedirectToAction("ProductGroupIndex");
+
+            Guid id = Guid.Parse(groupId);
+            Console.WriteLine("\n \n Removing \n \n");
+            await _productRepository.RemoveGroupAsync(id);
+            return RedirectToAction("ProductGroupIndex");
+        }
+        #endregion
     }
 }

@@ -1,0 +1,58 @@
+﻿@model MoneyBoxWebsite.Models.ProductGroup
+@{
+    ViewData["Title"] = "Group details";
+}
+
+
+<div class="btn-bar-container">
+    <h1 class="btn-bar-title">Details about <span style="color: red">@Model.Name</span></h1>
+    <a asp-action="ProductGroupIndex" class="btn btn-primary">Back to list</a>
+</div>
+
+<br />
+
+<article>
+    <p style="font-size:20px">The current product group is linked to <b>@Model.GroupedProducts.Count</b> products</p>
+
+    <br />
+
+    @if(Model.GroupedProducts.Count > 0){
+        <ul class="product-gallery">
+            @foreach (Product product in Model.GroupedProducts)
+            {
+                <li class="product-item">
+                    <a asp-action="Details" asp-route-id="@product.ProductId">
+                        <div class="product-image" style="background-image: url(@product.ImageFilePath);">
+                            <div class="product-overlay">
+                                <h3>@product.Name</h3>
+                                <p>@product.Price €</p>
+                            </div>
+                        </div>
+                    </a>
+                </li>
+            }
+        </ul>
+    }
+</article>
+
+<br />
+
+<article>
+    <form asp-action="EditGroup" asp-route-id="@Model.ProductGroupId">
+        <h3>Rename product group</h3>
+
+        <div class="form-group">
+            <label for="Name" class="control-label"></label>
+            <input type="text" for="Name" name="newName" class="form-control" />
+        </div>
+
+        <div class="form-group">
+            <input type="submit" value="Update" class="btn btn-primary" />
+        </div>
+
+        @if (!string.IsNullOrEmpty(ViewBag.EditGroupErrors))
+        {
+            <span class="text-danger">@ViewBag.EditGroupErrors</span>
+        }
+    </form>
+</article>

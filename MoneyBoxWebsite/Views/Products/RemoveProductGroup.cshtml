@@ -1,0 +1,20 @@
+﻿@model MoneyBoxWebsite.Models.ProductGroup
+@{
+    ViewData["Title"] = "Remove group";
+}
+
+<div class="btn-bar-container">
+    <h1 class="btn-bar-title" style="color:red">Are you sure ?</h1>
+    <a asp-action="ProductGroupIndex" class="btn btn-primary">Back to list</a>
+</div>
+
+<h3>You are trying to remove the product <span style="color:red">@Model.Name</span></h3>
+
+<p style="font-size:20px">The current product group is linked to <b>@Model.GroupedProducts.Count</b> products</p>
+
+<form asp-action="DeleteGroup">
+    <input type="hidden" name="groupId" value="@Model.ProductGroupId"/>
+    <button type="submit" class="btn btn-danger">
+        Delete
+    </button>
+</form>

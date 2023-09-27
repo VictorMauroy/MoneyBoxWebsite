@@ -1,4 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using MoneyBoxWebsite.Data;
 using MoneyBoxWebsite.Models;
 
@@ -73,9 +75,19 @@ namespace MoneyBoxWebsite.Repositories
 
         public async Task RemoveGroupAsync(Guid id)
         {
-            ProductGroup groupToRemove = await GetGroupByIdAsync(id);
-            _ctx.Remove(groupToRemove);
-            await SaveChangesAsync();
+            ProductGroup? groupToRemove = await GetGroupByIdAsync(id);
+
+            if (groupToRemove != null)
+            {
+                // Break links
+                foreach (Product product in groupToRemove.GroupedProducts)
+                {
+                    product.ProductGroups.Remove(groupToRemove);
+                }
+
+                _ctx.Remove(groupToRemove);
+                await SaveChangesAsync();
+            }
         }
         #endregion
     }
