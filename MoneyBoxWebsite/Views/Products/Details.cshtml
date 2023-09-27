@@ -13,15 +13,24 @@
 } 
 else
 {
-    <h1>Details</h1>
+    <div class="btn-bar-container">
+        <h1 class="btn-bar-title">Details</h1>
+
+        @if (User.IsInRole("Admin") || User.IsInRole("Manager") || User.IsInRole("Assistant"))
+        {
+            <a asp-action="Edit" asp-controller="Products" asp-route-id="@Model.ProductId" class="btn btn-success btn-bar-element">
+                Edit
+            </a>
+            <a asp-action="Delete" asp-controller="Products" asp-route-id="@Model.ProductId" class="btn btn-danger btn-bar-element">
+                Delete
+            </a> 
+        }
+        <a asp-action="Index" class="btn btn-primary btn-bar-element">Back to List</a>
+    </div>
+
+    <br />
 
     <div style="display: flex; flex-flow: row wrap;">
-        <div style="flex-basis:30%">
-            <img 
-            style="width:auto; height:auto; max-width:90%; max-height:90%"
-            src="@Model.ImageFilePath" alt="Image of @Model.Name" />
-        </div>
-
         <div style="flex-basis:70%">
             <h4>Product</h4>
             <hr />
@@ -105,10 +114,10 @@ else
             </dl>
     
         </div>
-    </div>
-    <div>
-        <a asp-action="Edit" asp-controller="Products" asp-route-id="@Model.ProductId">Edit</a> |
-        <a asp-action="Delete" asp-controller="Products" asp-route-id="@Model.ProductId">Delete</a> |
-        <a asp-action="Index">Back to List</a>
+
+        <div style="flex-basis:30%">
+            <img style="width:auto; height:auto; max-width:90%; max-height:90%"
+                 src="@Model.ImageFilePath" alt="Image of @Model.Name" />
+        </div>
     </div>
 }

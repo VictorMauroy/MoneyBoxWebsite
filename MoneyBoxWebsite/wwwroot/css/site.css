@@ -76,3 +76,17 @@ body {
         width: 100%; /* One item per row on even smaller screens */
     }
 }
+
+
+.btn-bar-container {
+    display: flex;
+    align-items: center;
+}
+
+.btn-bar-title {
+    margin: auto;
+}
+
+.btn-bar-element {
+    margin : 10px;
+}
