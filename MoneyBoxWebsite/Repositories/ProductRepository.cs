@@ -13,6 +13,7 @@ namespace MoneyBoxWebsite.Repositories
             this._ctx = ctx;
         }
 
+        #region Products
         public async Task<IEnumerable<Product>> GetAllAsync()
         {
             return await _ctx.Products.ToListAsync();
@@ -40,10 +41,42 @@ namespace MoneyBoxWebsite.Repositories
             productToDisable.Visibility = false;
             await SaveChangesAsync();
         }
+        #endregion
 
         public async Task SaveChangesAsync()
         {
             await _ctx.SaveChangesAsync();
         }
+
+        #region Product Groups
+        public async Task<ProductGroup?> GetGroupByIdAsync(Guid id)
+        {
+            return await _ctx.ProductGroups.FirstOrDefaultAsync(g => g.ProductGroupId == id);
+        }
+
+        public async Task<IEnumerable<ProductGroup>> GetAllGroupsAsync()
+        {
+            return await _ctx.ProductGroups.ToListAsync();
+        }
+
+        public async Task CreateGroupAsync(ProductGroup group)
+        {
+            await _ctx.ProductGroups.AddAsync(group);
+            await SaveChangesAsync();
+        }
+
+        public async Task UpdateGroupAsync(ProductGroup group)
+        {
+            _ctx.ProductGroups.Update(group);
+            await SaveChangesAsync();
+        }
+
+        public async Task RemoveGroupAsync(Guid id)
+        {
+            ProductGroup groupToRemove = await GetGroupByIdAsync(id);
+            _ctx.Remove(groupToRemove);
+            await SaveChangesAsync();
+        }
+        #endregion
     }
 }

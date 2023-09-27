@@ -44,8 +44,13 @@ namespace MoneyBoxWebsite.Controllers
         }
 
         // GET: Products/Create
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
+            IEnumerable<ProductGroup> groups = await _productRepository.GetAllGroupsAsync();
+            List<string> groupNames = (from ProductGroup groupElement in groups
+                                      select groupElement.Name).ToList();
+            ViewBag.GroupNames = groupNames;
+            
             return View();
         }
 
@@ -79,16 +84,49 @@ namespace MoneyBoxWebsite.Controllers
             return View();
         }
 
+        public async Task<IActionResult> ProductGroupIndex()
+        {
+            IEnumerable<ProductGroup> productGroups = await _productRepository.GetAllGroupsAsync();
+            List<ProductGroup> orderedGroups = (from productGroup in productGroups
+                                               orderby productGroup.Name
+                                               select productGroup).ToList();
+            return View(orderedGroups);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AddProductGroup(string name)
+        {
+            ProductGroup group = new() { Name = name };
+            await _productRepository.CreateGroupAsync(group);
+            return View("ProductGroupIndex");
+        }
+
+        public async Task<IActionResult> EditGroup(Guid id)
+        {
+            ProductGroup? group = await _productRepository.GetGroupByIdAsync(id);
+            if (group == null)
+                return NotFound();
+
+            return View(group);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> EditGroup(Guid id, string newName)
+        {
+            ProductGroup? group = await _productRepository.GetGroupByIdAsync(id);
+            if (group == null)
+                return NotFound(); // Could it be null if removed by another user ?
+
+            group.Name = newName;
+            await _productRepository.UpdateGroupAsync(group);
+            
+            return View();
+        }
+
         // GET: Products/Edit/5
         public async Task<IActionResult> Edit(Guid id)
         {
             var product = await _productRepository.GetByIdAsync(id);
-            /*if (product == null)
-            {
-                return NotFound();
-            }*/
-
-            Console.WriteLine("\n \n Editing product. \n \n");
 
             return View(product);
         }

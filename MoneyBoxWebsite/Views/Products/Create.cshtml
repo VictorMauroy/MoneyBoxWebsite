@@ -1,10 +1,13 @@
-﻿@model MoneyBoxWebsite.Models.Product
+﻿@model MoneyBoxWebsite.Models.ViewModels.ProductViewModel
 
 @{
     ViewData["Title"] = "Create";
 }
 
-<h1>Create</h1>
+<div class="btn-bar-container">
+    <h1 class="btn-bar-title">Create</h1>
+    <a asp-action="ProductGroupIndex" class="btn btn-success">Product groups</a>
+</div>
 
 <h4>Product</h4>
 <hr />
@@ -12,17 +15,10 @@
     <div class="col-md-4">
         <form asp-action="Create">
             <!--enctype="multipart/form-data"-->
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="Name" class="control-label"></label>
                 <input asp-for="Name" class="form-control" />
                 <span asp-validation-for="Name" class="text-danger"></span>
-            </div>
-
-            <div class="form-group">
-                <label asp-for="Reference" class="control-label"></label>
-                <input asp-for="Reference" class="form-control" />
-                <span asp-validation-for="Reference" class="text-danger"></span>
             </div>
 
             <div class="form-group">
@@ -40,7 +36,7 @@
             <div class="form-group">
                 <label for="ImageFilePath" class="control-label">Upload an image</label>
                 <input type="file" accept=".png, .jpeg, .jpg" name="ImageFilePath" class="form-control" />
-                <span asp-validation-for="ImageFilePath" class="text-danger"></span>
+                <span asp-validation-for="Image" class="text-danger"></span>
             </div>
 
             <div class="form-group">
@@ -85,15 +81,22 @@
                 <span asp-validation-for="MoneyCapacity" class="text-danger"></span>
             </div>
 
-            <div class="form-group form-check">
-                <label class="form-check-label">
-                    <input class="form-check-input" asp-for="Visibility" /> @Html.DisplayNameFor(model => model.Visibility)
-                </label>
+            <div class="form-group">
+                <label for="SelectedGroup">New Role selection:</label>
+                <select class="form-select" name="SelectedGroup" style="margin-bottom: 7px">
+                    <option value="">Select a group of products</option>
+                    @foreach (string groupName in ViewBag.GroupNames)
+                    {
+                        <option value="@groupName">@groupName</option>
+                    }
+                </select>
             </div>
 
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
+            </div>        
+
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
         </form>
     </div>
 </div>
