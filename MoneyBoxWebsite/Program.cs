@@ -71,9 +71,6 @@ namespace MoneyBoxWebsite
                 // Cookie settings
                 options.Cookie.HttpOnly = true;
                 options.ExpireTimeSpan = TimeSpan.FromMinutes(5);
-
-                options.LoginPath = "/Identity/Account/Login";
-                options.AccessDeniedPath = "/Identity/Account/AccessDenied";
                 options.SlidingExpiration = true;
             });
 
@@ -85,8 +82,8 @@ namespace MoneyBoxWebsite
             .AddCookie(options =>
             {
                 //In case your are trying to load a page that uses the attribute Authorize :
-                options.LoginPath = "/Account/Login"; // When not authenticated, you'll be redirected to that page.
-                options.AccessDeniedPath = "/Account/AccessDenied"; // When you doesn't have the right role.
+                options.LoginPath = "/Login"; // When not authenticated, you'll be redirected to that page.
+                options.AccessDeniedPath = "/AccessDenied"; // When you doesn't have the right role.
             });
 
 
