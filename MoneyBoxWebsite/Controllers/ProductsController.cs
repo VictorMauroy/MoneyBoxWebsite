@@ -48,8 +48,8 @@ namespace MoneyBoxWebsite.Controllers
         public async Task<IActionResult> Create()
         {
             IEnumerable<ProductGroup> groups = await _productRepository.GetAllGroupsAsync();
-            List<ProductGroup> orderedGroups = (from ProductGroup groupElement in groups
-                                                orderby groupElement
+            List<ProductGroup> orderedGroups = (from groupElement in groups
+                                                orderby groupElement.Name
                                                 select groupElement)
                                                 .ToList();
             ViewBag.Groups = orderedGroups;
@@ -92,8 +92,16 @@ namespace MoneyBoxWebsite.Controllers
 
                 await _productRepository.CreateAsync(product); // Create and save
                 
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Index");
             }
+
+            IEnumerable<ProductGroup> groups = await _productRepository.GetAllGroupsAsync();
+            List<ProductGroup> orderedGroups = (from groupElement in groups
+                                                orderby groupElement.Name
+                                                select groupElement)
+                                                .ToList();
+            ViewBag.Groups = orderedGroups;
+
             return View();
         }
 
