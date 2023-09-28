@@ -1,4 +1,4 @@
-﻿@model MoneyBoxWebsite.Models.Product
+﻿@model MoneyBoxWebsite.Models.ViewModels.EditProductViewModel
 
 @{
     ViewData["Title"] = "Edit";
@@ -10,78 +10,110 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Edit">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="ProductId" />
-            <div class="form-group">
-                <label asp-for="Name" class="control-label"></label>
-                <input asp-for="Name" class="form-control" />
-                <span asp-validation-for="Name" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Reference" class="control-label"></label>
-                <input asp-for="Reference" class="form-control" />
-                <span asp-validation-for="Reference" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Description" class="control-label"></label>
-                <input asp-for="Description" class="form-control" />
-                <span asp-validation-for="Description" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Price" class="control-label"></label>
-                <input asp-for="Price" class="form-control" />
-                <span asp-validation-for="Price" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ImageFilePath" class="control-label"></label>
-                <input asp-for="ImageFilePath" class="form-control" />
-                <span asp-validation-for="ImageFilePath" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Height" class="control-label"></label>
-                <input asp-for="Height" class="form-control" />
-                <span asp-validation-for="Height" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Width" class="control-label"></label>
-                <input asp-for="Width" class="form-control" />
-                <span asp-validation-for="Width" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Length" class="control-label"></label>
-                <input asp-for="Length" class="form-control" />
-                <span asp-validation-for="Length" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Weight" class="control-label"></label>
-                <input asp-for="Weight" class="form-control" />
-                <span asp-validation-for="Weight" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Color" class="control-label"></label>
-                <input asp-for="Color" class="form-control" />
-                <span asp-validation-for="Color" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Manufacturer" class="control-label"></label>
-                <input asp-for="Manufacturer" class="form-control" />
-                <span asp-validation-for="Manufacturer" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="MoneyCapacity" class="control-label"></label>
-                <input asp-for="MoneyCapacity" class="form-control" />
-                <span asp-validation-for="MoneyCapacity" class="text-danger"></span>
-            </div>
-            <div class="form-group form-check">
-                <label class="form-check-label">
-                    <input class="form-check-input" asp-for="Visibility" /> @Html.DisplayNameFor(model => model.Visibility)
-                </label>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
-            </div>
-        </form>
+        @if((Product?)ViewBag.CurrentProduct != null)
+        {
+            Product currentProduct;
+            currentProduct = ViewBag.CurrentProduct;
+            
+            <form asp-action="Edit" enctype="multipart/form-data">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            
+                <div class="form-group">
+                    <label asp-for="Name" class="control-label"></label>
+                    <input asp-for="Name" class="form-control"value="@currentProduct.Name"/>
+                    <span asp-validation-for="Name" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="Description" class="control-label"></label>
+                    <input asp-for="Description" class="form-control" value="@currentProduct.Description" />
+                    <span asp-validation-for="Description" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="Price" class="control-label"></label>
+                    <input asp-for="Price" class="form-control" value="@currentProduct.Price" />
+                    <span asp-validation-for="Price" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="Image" class="control-label"></label>
+                    <input asp-for="Image" class="form-control" accept=".png, .jpeg, .jpg" />
+                    <span>Previous image:</span>
+                    <img src="@currentProduct.ImageFilePath" style="width:100px; height:100px" alt="Previous image" />
+                    <span asp-validation-for="Image" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="Height" class="control-label"></label>
+                    <input asp-for="Height" class="form-control" value="@currentProduct.Height" />
+                    <span asp-validation-for="Height" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="Width" class="control-label"></label>
+                    <input asp-for="Width" class="form-control" value="@currentProduct.Width" />
+                    <span asp-validation-for="Width" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="Length" class="control-label"></label>
+                    <input asp-for="Length" class="form-control" value="@currentProduct.Length" />
+                    <span asp-validation-for="Length" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="Weight" class="control-label"></label>
+                    <input asp-for="Weight" class="form-control" value="@currentProduct.Weight" />
+                    <span asp-validation-for="Weight" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="Color" class="control-label"></label>
+                    <input asp-for="Color" class="form-control" value="@currentProduct.Color" />
+                    <span asp-validation-for="Color" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="Manufacturer" class="control-label"></label>
+                    <input asp-for="Manufacturer" class="form-control" value="@currentProduct.Manufacturer" />
+                    <span asp-validation-for="Manufacturer" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="MoneyCapacity" class="control-label"></label>
+                    <input asp-for="MoneyCapacity" class="form-control" value="@currentProduct.MoneyCapacity" />
+                    <span asp-validation-for="MoneyCapacity" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label for="SelectedGroup">Group of products</label>
+                    <select class="form-select" name="SelectedGroup" style="margin-bottom: 7px" multiple>
+                        <option value="">Select a group of products</option>
+                        @foreach (ProductGroup group in ViewBag.Groups)
+                        {
+                            if (currentProduct.ProductGroups.Contains(group))
+                            {
+                                <option value="@group.ProductGroupId" selected="selected">@group.Name</option>                                
+                            } else
+                            {
+                                <option value="@group.ProductGroupId">@group.Name</option>
+                            }
+                        }
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <input type="submit" value="Save" class="btn btn-primary" />
+                </div>
+            </form>
+
+
+        } else
+        {
+            <h3>Product not found</h3>
+            <p>Couldn't find the desired product. Please try again later.</p>
+        }
     </div>
 </div>
 

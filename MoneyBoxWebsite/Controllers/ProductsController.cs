@@ -48,13 +48,8 @@ namespace MoneyBoxWebsite.Controllers
         // GET: Products/Create
         public async Task<IActionResult> Create()
         {
-            IEnumerable<ProductGroup> groups = await _productRepository.GetAllGroupsAsync();
-            List<ProductGroup> orderedGroups = (from groupElement in groups
-                                                orderby groupElement.Name
-                                                select groupElement)
-                                                .ToList();
-            ViewBag.Groups = orderedGroups;
-            
+            ViewBag.Groups = await FillViewBag();
+
             return View();
         }
 
@@ -63,113 +58,165 @@ namespace MoneyBoxWebsite.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(ProductViewModel productCreation)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                string imgExtension = Path.GetExtension(productCreation.Image.FileName);
-                if(imgExtension != ".png" &&  imgExtension != ".jpg" && imgExtension != ".jpeg")
-                {
-                    ModelState.AddModelError(
-                        "Image",
-                        "Current extension: " + imgExtension +
-                        ". That file format isn't accepted. Please add a .jpg, .jpeg or .png");
-                    goto SkipProductCreation;
-                }
-
-                string storedImgName = FileUploader.UploadImage(productCreation.Image);
-                if(storedImgName == "")
-                {
-                    ModelState.AddModelError(
-                        "Image", 
-                        "Couldn't save the file. " + 
-                            "Please try again with another one. Accepted format : .jpg, .jpeg, .png");
-                    goto SkipProductCreation;
-                }
-
-                string productRef = Guid.NewGuid().ToString();
-                Product product = new Product
-                {
-                    Name = productCreation.Name,
-                    Description = productCreation.Description,
-                    Price = productCreation.Price,
-                    Height = productCreation.Height,
-                    Width = productCreation.Width,
-                    Length = productCreation.Length,
-                    Weight = productCreation.Weight,
-                    MoneyCapacity = productCreation.MoneyCapacity,
-                    ImageFilePath = "/images/" + storedImgName,
-                    Reference = "#" + productRef,
-                    Manufacturer = productCreation.Manufacturer,
-                    Color = productCreation.Color
-                };
-
-                if (productCreation.GroupIds.Count > 1)
-                {
-                    foreach (Guid groupId in productCreation.GroupIds)
-                    {
-                        ProductGroup? group = await _productRepository.GetGroupByIdAsync(groupId);
-                        if (group != null)
-                            product.ProductGroups.Add(group);
-                    }
-                }
-
-                await _productRepository.CreateAsync(product); // Create and save
-                
-                return RedirectToAction("Index");
+                ViewBag.Groups = await FillViewBag();
+                return View();
             }
 
-            SkipProductCreation:
+            string imgExtension = Path.GetExtension(productCreation.Image.FileName);
+            if (imgExtension != ".png" && imgExtension != ".jpg" && imgExtension != ".jpeg")
+            {
+                ModelState.AddModelError(
+                    "Image",
+                    "Current extension: " + imgExtension +
+                    ". That file format isn't accepted. Please add a .jpg, .jpeg or .png");
+                ViewBag.Groups = await FillViewBag();
+                return View();
+            }
 
+            string storedImgName = FileUploader.UploadImage(productCreation.Image);
+            if (storedImgName == "")
+            {
+                ModelState.AddModelError(
+                    "Image",
+                    "Couldn't save the file. " +
+                        "Please try again with another one. Accepted format : .jpg, .jpeg, .png");
+                ViewBag.Groups = await FillViewBag();
+                return View();
+            }
+
+            string productRef = Guid.NewGuid().ToString();
+            Product product = new Product
+            {
+                Name = productCreation.Name,
+                Description = productCreation.Description,
+                Price = productCreation.Price,
+                Height = productCreation.Height,
+                Width = productCreation.Width,
+                Length = productCreation.Length,
+                Weight = productCreation.Weight,
+                MoneyCapacity = productCreation.MoneyCapacity,
+                ImageFilePath = "/images/" + storedImgName,
+                Reference = "#" + productRef,
+                Manufacturer = productCreation.Manufacturer,
+                Color = productCreation.Color
+            };
+
+            if (productCreation.GroupIds.Count > 1)
+            {
+                foreach (Guid groupId in productCreation.GroupIds)
+                {
+                    ProductGroup? group = await _productRepository.GetGroupByIdAsync(groupId);
+                    if (group != null)
+                        product.ProductGroups.Add(group);
+                }
+            }
+
+            await _productRepository.CreateAsync(product); // Create and save
+
+            return RedirectToAction("Index");
+        }
+
+        /// <summary>
+        /// Fill the ViewBag with the list of group of products.
+        /// </summary>
+        /// <returns>The group of products list</returns>
+        public async Task<List<ProductGroup>> FillViewBag()
+        {
             IEnumerable<ProductGroup> groups = await _productRepository.GetAllGroupsAsync();
             List<ProductGroup> orderedGroups = (from groupElement in groups
                                                 orderby groupElement.Name
                                                 select groupElement)
                                                 .ToList();
-            ViewBag.Groups = orderedGroups;
-
-            return View();
+            return orderedGroups;
         }
 
         // GET: Products/Edit/5
         public async Task<IActionResult> Edit(Guid id)
         {
-            var product = await _productRepository.GetByIdAsync(id);
+            Product product = await _productRepository.GetByIdAsync(id);
+            ViewBag.CurrentProduct = product;
 
-            return View(product);
+            ViewBag.Groups = await FillViewBag();
+
+            return View();
         }
 
         // POST: Products/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, ProductViewModel editedProduct)
+        public async Task<IActionResult> Edit(Guid id, EditProductViewModel editedProduct)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                Product product = await _productRepository.GetByIdAsync(id);
+                Product currentProduct = await _productRepository.GetByIdAsync(id);
+                ViewBag.CurrentProduct = currentProduct;
 
-                product.Name = editedProduct.Name;
-                product.Description = editedProduct.Description;
-                product.Price = editedProduct.Price;
-                product.Height = editedProduct.Height;
-                product.Width = editedProduct.Width;
-                product.Length = editedProduct.Length;
-                product.Manufacturer = editedProduct.Manufacturer;
-                product.Color = editedProduct.Color;
-                product.Weight = editedProduct.Weight;
-                product.ImageFilePath = "";
-
-                try
-                {
-                    await _productRepository.UpdateAsync(product); // Update and Save
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    return NotFound();   
-                }
-
-                return RedirectToAction(nameof(Index));
+                ViewBag.Groups = await FillViewBag();
+                return View();
             }
 
-            return View();
+            Product product = await _productRepository.GetByIdAsync(id);
+
+            if (editedProduct.Image != null && editedProduct.Image.Length > 0)
+            {
+                string imgExtension = Path.GetExtension(editedProduct.Image.FileName);
+                if (imgExtension != ".png" && imgExtension != ".jpg" && imgExtension != ".jpeg")
+                {
+                    ModelState.AddModelError(
+                        "Image",
+                        "Current extension: " + imgExtension +
+                        ". That file format isn't accepted. Please add a .jpg, .jpeg or .png");
+
+                    Product currentProduct = await _productRepository.GetByIdAsync(id);
+                    ViewBag.CurrentProduct = currentProduct;
+
+                    ViewBag.Groups = await FillViewBag();
+                    return View();
+                }
+
+                string storedImgName = FileUploader.UploadImage(editedProduct.Image);
+                if (storedImgName == "")
+                {
+                    ModelState.AddModelError(
+                        "Image",
+                        "Couldn't save the file. " +
+                            "Please try again with another one. Accepted format : .jpg, .jpeg, .png");
+
+                    Product currentProduct = await _productRepository.GetByIdAsync(id);
+                    ViewBag.CurrentProduct = currentProduct;
+
+                    ViewBag.Groups = await FillViewBag();
+                    return View();
+                }
+
+
+                // I should remove the old image here. Before saving the new one.
+
+                product.ImageFilePath = "/images/" + storedImgName;
+            }
+
+            product.Name = editedProduct.Name;
+            product.Description = editedProduct.Description;
+            product.Price = editedProduct.Price;
+            product.Height = editedProduct.Height;
+            product.Width = editedProduct.Width;
+            product.Length = editedProduct.Length;
+            product.Manufacturer = editedProduct.Manufacturer;
+            product.Color = editedProduct.Color;
+            product.Weight = editedProduct.Weight;
+
+            try
+            {
+                await _productRepository.UpdateAsync(product); // Update and Save
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                return NotFound();
+            }
+
+            return RedirectToAction("Details", new {id});
         }
 
         // GET: Products/Delete/5
@@ -194,9 +241,10 @@ namespace MoneyBoxWebsite.Controllers
             {
                 await _productRepository.DisableAsync(id); // Disable visibility and Save
             }
-            
+
             return RedirectToAction(nameof(Index));
         }
+
         #endregion
 
         #region Product Groups
@@ -243,7 +291,8 @@ namespace MoneyBoxWebsite.Controllers
             {
                 ViewBag.EditGroupErrors = "Please enter a valid group name.";
                 return RedirectToAction("GroupDetails", new { id });
-            } else
+            }
+            else
             {
                 ViewBag.EditGroupErrors = "";
             }
@@ -255,14 +304,14 @@ namespace MoneyBoxWebsite.Controllers
             group.Name = newName;
             await _productRepository.UpdateGroupAsync(group);
 
-            return RedirectToAction("GroupDetails", new {id});
+            return RedirectToAction("GroupDetails", new { id });
         }
 
 
         public async Task<IActionResult> RemoveProductGroup(Guid id)
         {
             ProductGroup? group = await _productRepository.GetGroupByIdAsync(id);
-            if(group == null)
+            if (group == null)
                 return NotFound();
 
             return View(group);
@@ -272,7 +321,7 @@ namespace MoneyBoxWebsite.Controllers
         public async Task<IActionResult> DeleteGroup()
         {
             string groupId = Request.Form["groupId"];
-            if (string.IsNullOrEmpty(groupId)) 
+            if (string.IsNullOrEmpty(groupId))
                 return RedirectToAction("ProductGroupIndex");
 
             Guid id = Guid.Parse(groupId);

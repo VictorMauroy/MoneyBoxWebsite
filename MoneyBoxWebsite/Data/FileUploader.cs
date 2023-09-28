@@ -17,8 +17,6 @@
                 // Specify where to insert the new file
                 string filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images", fileName);
 
-                Console.WriteLine(" \n \n Image file path" + filePath + "\n \n");
-
                 // Upload file on the server
                 using (var stream = new FileStream(filePath, FileMode.Create))
                 {
@@ -27,7 +25,6 @@
 
                 return fileName;
             }
-
 
             return ""; // In case any error occured
         }
