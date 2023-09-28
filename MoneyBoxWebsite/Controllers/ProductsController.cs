@@ -65,6 +65,26 @@ namespace MoneyBoxWebsite.Controllers
         {
             if (ModelState.IsValid)
             {
+                string imgExtension = Path.GetExtension(productCreation.Image.FileName);
+                if(imgExtension != ".png" &&  imgExtension != ".jpg" && imgExtension != ".jpeg")
+                {
+                    ModelState.AddModelError(
+                        "Image",
+                        "Current extension: " + imgExtension +
+                        ". That file format isn't accepted. Please add a .jpg, .jpeg or .png");
+                    goto SkipProductCreation;
+                }
+
+                string storedImgName = FileUploader.UploadImage(productCreation.Image);
+                if(storedImgName == "")
+                {
+                    ModelState.AddModelError(
+                        "Image", 
+                        "Couldn't save the file. " + 
+                            "Please try again with another one. Accepted format : .jpg, .jpeg, .png");
+                    goto SkipProductCreation;
+                }
+
                 string productRef = Guid.NewGuid().ToString();
                 Product product = new Product
                 {
@@ -76,7 +96,7 @@ namespace MoneyBoxWebsite.Controllers
                     Length = productCreation.Length,
                     Weight = productCreation.Weight,
                     MoneyCapacity = productCreation.MoneyCapacity,
-                    ImageFilePath = "/images/" + FileUploader.UploadImage(productCreation.Image),
+                    ImageFilePath = "/images/" + storedImgName,
                     Reference = "#" + productRef,
                     Manufacturer = productCreation.Manufacturer,
                     Color = productCreation.Color
@@ -96,6 +116,8 @@ namespace MoneyBoxWebsite.Controllers
                 
                 return RedirectToAction("Index");
             }
+
+            SkipProductCreation:
 
             IEnumerable<ProductGroup> groups = await _productRepository.GetAllGroupsAsync();
             List<ProductGroup> orderedGroups = (from groupElement in groups
