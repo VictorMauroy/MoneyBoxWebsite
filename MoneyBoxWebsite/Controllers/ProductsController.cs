@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using MoneyBoxWebsite;
+using MoneyBoxWebsite.Data;
 using MoneyBoxWebsite.Models;
 using MoneyBoxWebsite.Models.ViewModels;
 using MoneyBoxWebsite.Repositories;
@@ -64,6 +65,7 @@ namespace MoneyBoxWebsite.Controllers
         {
             if (ModelState.IsValid)
             {
+                string productRef = Guid.NewGuid().ToString();
                 Product product = new Product
                 {
                     Name = productCreation.Name,
@@ -74,8 +76,8 @@ namespace MoneyBoxWebsite.Controllers
                     Length = productCreation.Length,
                     Weight = productCreation.Weight,
                     MoneyCapacity = productCreation.MoneyCapacity,
-                    ImageFilePath = "",
-                    Reference = "#" + "",
+                    ImageFilePath = "/images/" + FileUploader.UploadImage(productCreation.Image),
+                    Reference = "#" + productRef,
                     Manufacturer = productCreation.Manufacturer,
                     Color = productCreation.Color
                 };

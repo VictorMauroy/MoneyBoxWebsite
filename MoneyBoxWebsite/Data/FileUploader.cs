@@ -1,13 +1,13 @@
 ﻿namespace MoneyBoxWebsite.Data
 {
-    public class FileUploader
+    public static class FileUploader
     {
         /// <summary>
         /// Upload an image file on the server. Upload folder : wwwroot/images.
         /// </summary>
         /// <param name="imageFile">The image to upload.</param>
         /// <returns>The path where the image is saved.</returns>
-        public string UploadImage(IFormFile imageFile)
+        public static string UploadImage(IFormFile imageFile)
         {
             if(imageFile != null && imageFile.Length > 0)
             {
@@ -25,7 +25,7 @@
                     imageFile.CopyTo(stream);
                 }
 
-                return filePath;
+                return fileName;
             }
 
 

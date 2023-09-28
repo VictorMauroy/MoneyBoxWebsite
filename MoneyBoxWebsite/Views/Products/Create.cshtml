@@ -33,8 +33,8 @@
             </div>
 
             <div class="form-group">
-                <label for="ImageFilePath" class="control-label">Upload an image</label>
-                <input type="file" accept=".png, .jpeg, .jpg" name="ImageFilePath" class="form-control" />
+                <label asp-for="Image" class="control-label">Upload an image</label>
+                <input asp-for="Image" accept=".png, .jpeg, .jpg" class="form-control" />
                 <span asp-validation-for="Image" class="text-danger"></span>
             </div>
 

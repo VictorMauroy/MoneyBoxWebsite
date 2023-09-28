@@ -16,15 +16,18 @@
 <ul class="product-gallery">
     @foreach(Product product in Model)
     {
-        <li class="product-item">
-            <a asp-action="Details" asp-route-id="@product.ProductId">
-                <div class="product-image" style="background-image: url(@product.ImageFilePath);">
-                    <div class="product-overlay">
-                        <h3>@product.Name</h3>
-                        <p>@product.Price €</p>
+        if (product.Visibility)
+        {
+            <li class="product-item">
+                <a asp-action="Details" asp-route-id="@product.ProductId">
+                    <div class="product-image" style="background-image: url(@product.ImageFilePath);">
+                        <div class="product-overlay">
+                            <h3>@product.Name</h3>
+                            <p>@product.Price €</p>
+                        </div>
                     </div>
-                </div>
-            </a>
-        </li>
+                </a>
+            </li>
+        }
     }
 </ul>
