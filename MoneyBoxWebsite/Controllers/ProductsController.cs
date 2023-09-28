@@ -4,14 +4,17 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using MoneyBoxWebsite;
 using MoneyBoxWebsite.Data;
 using MoneyBoxWebsite.Models;
 using MoneyBoxWebsite.Models.ViewModels;
 using MoneyBoxWebsite.Repositories;
+using Newtonsoft.Json;
 
 namespace MoneyBoxWebsite.Controllers
 {
@@ -360,18 +363,22 @@ namespace MoneyBoxWebsite.Controllers
             };
 
             // Shipping cart exists
-            if(HttpContext.Session.TryGetValue("ShippingCart", out byte[] shippingCartBytes))
+            if(!HttpContext.Session.GetString("ShippingCart").IsNullOrEmpty())
             {
-                string shippingCartStr = Encoding.UTF8.GetString(shippingCartBytes);
+                string shippingCartJson = HttpContext.Session.GetString("ShippingCart");
+                List<ProductOrder> ordersList = JsonConvert.DeserializeObject<List<ProductOrder>>(shippingCartJson);
+                ordersList.Add(order);
 
-
+                string jsonString = JsonConvert.SerializeObject(ordersList, Formatting.Indented);
+                HttpContext.Session.SetString("ShippingCart", jsonString);
             } 
             else // Shipping cart doesn't exist
             {
-                List<ProductOrder> orderList = new List<ProductOrder>();
-                orderList.Add(order);
+                List<ProductOrder> ordersList = new List<ProductOrder>();
+                ordersList.Add(order);
 
-
+                string jsonString = JsonConvert.SerializeObject(ordersList, Formatting.Indented);
+                HttpContext.Session.SetString("ShippingCart", jsonString);
             }
             
             return View("Details", new { id = currentProduct.ProductId });
