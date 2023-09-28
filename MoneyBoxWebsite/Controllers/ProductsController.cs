@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -341,6 +342,41 @@ namespace MoneyBoxWebsite.Controllers
             await _productRepository.RemoveGroupAsync(id);
             return RedirectToAction("ProductGroupIndex");
         }
+        #endregion
+
+        #region Orders
+        [HttpPost, Authorize(Roles ="Admin, Manager, Assistant, Client, Moderator")]
+        public async Task<IActionResult> AddOrderToCart(IFormCollection formDatas)
+        {
+            Product currentProduct = await _productRepository.GetByIdAsync(Guid.Parse(formDatas["Id"]));
+            Console.WriteLine("\n \n" + "Ordering: " + formDatas["Quantity"] + " of " + currentProduct.Name + "\n \n");
+            int quantity = int.Parse(formDatas["Quantity"]);
+
+            ProductOrder order = new()
+            {
+                Quantity = quantity,
+                LinkedProduct = currentProduct,
+                SellPrice = currentProduct.Price
+            };
+
+            // Shipping cart exists
+            if(HttpContext.Session.TryGetValue("ShippingCart", out byte[] shippingCartBytes))
+            {
+                string shippingCartStr = Encoding.UTF8.GetString(shippingCartBytes);
+
+
+            } 
+            else // Shipping cart doesn't exist
+            {
+                List<ProductOrder> orderList = new List<ProductOrder>();
+                orderList.Add(order);
+
+
+            }
+            
+            return View("Details", new { id = currentProduct.ProductId });
+        }
+
         #endregion
     }
 }

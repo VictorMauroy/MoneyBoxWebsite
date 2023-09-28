@@ -92,6 +92,8 @@ namespace MoneyBoxWebsite
             builder.Services.AddScoped<IReviewRepository, ReviewRepository>();
             builder.Services.AddScoped<IUserRepository, UserRepository>();
 
+            builder.Services.AddSession();
+
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
@@ -115,6 +117,8 @@ namespace MoneyBoxWebsite
                 pattern: "{controller=Home}/{action=Index}/{id?}");
 
             app.MapRazorPages();
+
+            app.UseSession();
 
             // ACCESS DBCONTEXT AND ROLE MANAGER USING A SCOPE
             /*using (var scope = app.Services.CreateScope())

@@ -3,6 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace MoneyBoxWebsite.Models
 {
+    [Serializable]
     public class ProductOrder
     {
         [Key]
@@ -22,6 +23,6 @@ namespace MoneyBoxWebsite.Models
         public required Product LinkedProduct { get; set; }
 
         [Column("linked_order")]
-        public required Order LinkedOrder { get; set; }
+        public Order LinkedOrder { get; set; }
     }
 }

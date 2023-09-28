@@ -132,6 +132,20 @@ else
         <div style="flex-basis:30%">
             <img style="width:auto; height:auto; max-width:90%; max-height:90%"
                  src="@Model.ImageFilePath" alt="Image of @Model.Name" />
+
+            <h3>Order that product</h3>
+            <form asp-action="AddOrderToCart">
+                <div class="form-group">
+                    <label for="Quantity" class="control-label">Quantity</label>
+                    <input type="number" name="Quantity" class="form-control" value="1"/>
+                </div>
+
+                <input type="hidden" name="Id" value="@Model.ProductId" />
+
+                <div class="form-group">
+                    <input type="submit" value="Order" class="btn btn-primary" />
+                </div>
+            </form>
         </div>
     </div>
 }
