@@ -245,6 +245,19 @@ namespace MoneyBoxWebsite.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        [HttpPost]
+        public async Task<IActionResult> Restore(Guid id)
+        {
+            var product = await _productRepository.GetByIdAsync(id);
+            if (product != null)
+            {
+                await _productRepository.EnableAsync(id); // Disable visibility and Save
+            }
+
+            return RedirectToAction("Details", new {id});
+        }
+
+
         #endregion
 
         #region Product Groups

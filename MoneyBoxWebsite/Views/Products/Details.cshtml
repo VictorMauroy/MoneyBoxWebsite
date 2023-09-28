@@ -4,13 +4,13 @@
     ViewData["Title"] = "Details";
 }
 
-@if (!Model.Visibility)
+@if (!Model.Visibility && !(User.IsInRole("Admin") || User.IsInRole("Manager") || User.IsInRole("Assistant")))
 {
     <h1>Error</h1>
     <p>
         The product you are trying to access isn't available. Please try again later.
     </p>
-} 
+}
 else
 {
     <div class="btn-bar-container">
@@ -18,12 +18,26 @@ else
 
         @if (User.IsInRole("Admin") || User.IsInRole("Manager") || User.IsInRole("Assistant"))
         {
+            <!--
+                To redirect to an httpget -> <a> with asp-action
+                To redirect to an httppost -> <form> with asp-action
+            -->
             <a asp-action="Edit" asp-controller="Products" asp-route-id="@Model.ProductId" class="btn btn-success btn-bar-element">
                 Edit
             </a>
-            <a asp-action="Delete" asp-controller="Products" asp-route-id="@Model.ProductId" class="btn btn-danger btn-bar-element">
-                Delete
-            </a> 
+            if (Model.Visibility)
+            {
+                <a asp-action="Delete" asp-controller="Products" asp-route-id="@Model.ProductId" class="btn btn-danger btn-bar-element">
+                    Delete
+                </a>
+            } else
+            {
+                <form asp-action="Restore" asp-route-id="@Model.ProductId">
+                    <button type="submit" class="btn btn-info btn-bar-element">
+                        Restore
+                    </button>
+                </form>
+            }
         }
         <a asp-action="Index" class="btn btn-primary btn-bar-element">Back to List</a>
     </div>
@@ -112,7 +126,7 @@ else
                     @Html.DisplayFor(model => model.MoneyCapacity)
                 </dd>
             </dl>
-    
+
         </div>
 
         <div style="flex-basis:30%">

@@ -10,6 +10,7 @@ namespace MoneyBoxWebsite.Repositories
         Task CreateAsync(Product product);
         Task UpdateAsync(Product product);
         Task DisableAsync(Guid id);
+        Task EnableAsync(Guid id);
 
         // PRODUCT GROUPS
         Task<IEnumerable<ProductGroup>> GetAllGroupsAsync();

@@ -43,6 +43,13 @@ namespace MoneyBoxWebsite.Repositories
             productToDisable.Visibility = false;
             await SaveChangesAsync();
         }
+
+        public async Task EnableAsync(Guid id)
+        {
+            Product productToDisable = await GetByIdAsync(id);
+            productToDisable.Visibility = true;
+            await SaveChangesAsync();
+        }
         #endregion
 
         public async Task SaveChangesAsync()
