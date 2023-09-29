@@ -34,6 +34,12 @@ namespace MoneyBoxWebsite
 
             // Identity configuration
 
+            /*  ----- About the configuration. -----
+             *  It is recommended to move the options and configurations into the appsettings.json
+             *  or into Azure (appsettings). It allows to quickly modify the options without
+             *  the necessity to shut down the website or deploy it again.
+             */
+
             //builder.Services.AddDefaultIdentity<Client>(options => options.SignIn.RequireConfirmedAccount = true).AddEntityFrameworkStores<ApplicationDbContext>();
             builder.Services.AddIdentity<Client, IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()

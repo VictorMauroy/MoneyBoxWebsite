@@ -362,6 +362,12 @@ namespace MoneyBoxWebsite.Controllers
                 SellPrice = currentProduct.Price
             };
 
+            /*  ----- Session datas -----
+             *  To save the datas for the session, it's recommended to use a temporary table
+             *  inside the database. This is easier to work with when the website is deployed 
+             *  into a cluster or with Azure.
+             */
+
             // Shipping cart exists
             if(!HttpContext.Session.GetString("ShippingCart").IsNullOrEmpty())
             {
