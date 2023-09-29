@@ -1,8 +1,18 @@
 # MoneyBoxWebsite
 
-## Presentation
+## **Presentation**
 
-**Subject**: That project is based on a 2-weeks exercise where we were asked to realize a website around piggybank selling.
+### Technologies
+Framework: **ASP.NET** with **Identity** framework and **Entity Framework Core** (EF).
+
+Langage: **C#**, HTML5, CSS3.
+
+This website is an **MVC** website application made as **CodeFirst** that uses some CRUD, a Repository Pattern and **Razor** for front-end.
+
+Others: Miro, Github projects, Github issues.
+
+### Subject
+That project is based on a 2-weeks exercise where we were asked to realize a website around piggybank selling.
 
 The **main tasks** that we had to do were :
 - **Account**: Register, login, logout, profile.
@@ -20,7 +30,9 @@ The **main tasks** that we had to do were :
 
 There is many other tasks that were asked but those are the main ones.
 
-**Technologies**: 
+### Data model
+Given the few time I was given, I decided to made a condensed MCD and used it to create my entities with EF and set-up my database.
+<img src="resources/MCD.png" alt="MCD image">
 
 ## What's done
 
