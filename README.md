@@ -49,7 +49,6 @@ Quickly, there currently are:
 
 <img src="resources/register1.png" alt="register top">
 <img src="resources/register2.png" alt="register bottom">
-
 When creating an account, many checks are done in order to avoid duplicate username and email. I also used many regular expressions and Data Annotations to avoid receiving invalid entries.
 
 <br>
@@ -58,6 +57,10 @@ When creating an account, many checks are done in order to avoid duplicate usern
 When the user sign in, he can also check the "Stay signed in" box to create a cookie that allows to stay connected even when closing the web browser.
 
 ### Role Manager
+As said before, there are five roles: Client, moderator, assistant, manager and admin. Each one can do different tasks and access content or be restricted on some others. *See [Subject](#subject) for more details.*
+
+<img src="resources/user_manager.png" alt="user manager">
+<img src="resources/update_user.png" alt="user update">
 
 ### Product Manager
 
