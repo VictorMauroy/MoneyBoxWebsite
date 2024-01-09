@@ -36,6 +36,12 @@ Given the few time I was given, I decided to made a condensed MCD and used it to
 
 ## What's done
 
+Quickly, there currently are:
+- **A register, login and logout** system
+- A **role management system** that allows to add roles to users. Each roles has defined access and restrictions.
+- A **product manager** that allows to add, edit, delete and show all the products. Some products may be disabled and basic users cannot see them, instead of some other roles. Products can be linked with "product groups" that can be used to sort or show similar products or colors.
+- The shopping cart is an on-going feature.
+
 ## To-do
 
 ## Advices that I got
