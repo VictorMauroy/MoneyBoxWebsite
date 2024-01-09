@@ -37,10 +37,29 @@ Given the few time I was given, I decided to made a condensed MCD and used it to
 ## What's done
 
 Quickly, there currently are:
-- **A register, login and logout** system
-- A **role management system** that allows to add roles to users. Each roles has defined access and restrictions.
-- A **product manager** that allows to add, edit, delete and show all the products. Some products may be disabled and basic users cannot see them, instead of some other roles. Products can be linked with "product groups" that can be used to sort or show similar products or colors.
+- **A register, login and logout** system. 
+*See [Account](#account) for more details.*
+- A **role management system** that allows to add roles to users. Each roles has defined access and restrictions. 
+*See [Role Manager](#role-manager) for more details.*
+- A **product manager** that allows to add, edit, delete and show all the products. Some products may be disabled and basic users cannot see them, instead of some other roles. Products can be linked with "product groups" that can be used to sort or show similar products or colors. 
+*See [Product Manager](#product-manager) for more details.*
 - The shopping cart is an on-going feature.
+
+### Account
+
+<img src="resources/register1.png" alt="register top">
+<img src="resources/register2.png" alt="register bottom">
+
+When creating an account, many checks are done in order to avoid duplicate username and email. I also used many regular expressions and Data Annotations to avoid receiving invalid entries.
+
+<br>
+
+<img src="resources/Login.png" alt="login">
+When the user sign in, he can also check the "Stay signed in" box to create a cookie that allows to stay connected even when closing the web browser.
+
+### Role Manager
+
+### Product Manager
 
 ## To-do
 
