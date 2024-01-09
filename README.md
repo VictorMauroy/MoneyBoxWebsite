@@ -36,6 +36,62 @@ Given the few time I was given, I decided to made a condensed MCD and used it to
 
 ## What's done
 
-## To-do
+Quickly, there currently are:
+- **A register, login and logout** system. 
+*See [Account](#account) for more details.*
+- A **role management system** that allows to add roles to users. Each roles has defined access and restrictions. 
+*See [Role Manager](#role-manager) for more details.*
+- A **product manager** that allows to add, edit, delete and show all the products. Some products may be disabled and basic users cannot see them, instead of some other roles. Products can be linked with "product groups" that can be used to sort or show similar products or colors. 
+*See [Product Manager](#product-manager) for more details.*
+- The shopping cart is an on-going feature.
 
-## Advices that I got
+### Account
+
+When creating an account, many checks are done in order to avoid duplicate username and email. I also used many regular expressions and Data Annotations to avoid receiving invalid entries.
+
+<img src="resources/register1.png" alt="register top">
+<img src="resources/register2.png" alt="register bottom">
+
+<br>
+
+When the user sign in, he can also check the "Stay signed in" box to create a cookie that allows to stay connected even when closing the web browser.
+
+<img src="resources/Login.png" alt="login">
+
+### Role Manager
+As said before, there are five roles: Client, moderator, assistant, manager and admin. Each one can do different tasks and access content or be restricted on some others. *See [Subject](#subject) for more details.*
+
+<img src="resources/user_manager.png" alt="user manager">
+<img src="resources/update_user.png" alt="user update">
+
+### Product Manager
+
+This is what a basic user can see when entering the website (there is also a guest view). The enabled products are visible and he can interact with them. 
+
+<img src="resources/Home_user.png" alt="user home">
+
+The following picture is the view for a logged-in user. He can click on Order and check the details for a specific product.
+
+<img src="resources/Item_user.png" alt="user home">
+
+<hr>
+
+Being an admin or **having a product management role** also add more features, such as:
+
+**A different product list.** The disabled products are visible and it is possible to open and edit them. 
+<img src="resources/home_admin.png" alt="admin home">
+
+**Alternative product view**
+<img src="resources/item_admin.png" alt="product view admin">
+
+
+**Add products**
+<img src="resources/add_product.png" alt="add product top">
+<img src="resources/add_product2.png" alt="add product bottom">
+
+**Edit products**
+<img src="resources/item_edit.png" alt="edit product top">
+<img src="resources/item_edit2.png" alt="edit product bottom">
+
+**Manage the product groups**
+<img src="resources/product_groups.png" alt="product groups">
